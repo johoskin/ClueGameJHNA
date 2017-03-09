@@ -185,6 +185,7 @@ public class ASTS_BoardAdjTargetTests {
 			assertTrue(targets.contains(board.getCellAt(11, 19)));
 		}	
 		
+		//hello
 		// Test getting into a room
 		// These are DARK GREEN on the planning spreadsheet
 		@Test 
