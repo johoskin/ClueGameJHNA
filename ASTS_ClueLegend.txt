@@ -1,0 +1,11 @@
+B, Bathroom, Card
+T, Theater, Card
+G, Game Room, Card
+K, Kitchen, Card
+A, Annex, Card
+C, Attic, Card
+Y, Balcony, Card
+L, Living Room, Card
+O, Office, Card
+H, Hallway, Other
+X, Closet, Other
