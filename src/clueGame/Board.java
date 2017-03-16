@@ -15,12 +15,13 @@ public class Board {
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private Map<Character, String> legend;
-	private String boardConfigFile, roomConfigFile, playerConfigFile;
+	private String boardConfigFile, roomConfigFile, playerConfigFile, cardConfigFile;
 	private Map<BoardCell, Set<BoardCell>> adjMtx; //adjacency matrix
 	private Set<BoardCell> visited; //visited cells
 	private Set<BoardCell> targets; //targets for the player to move to
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
 	private Player[] players = new Player[6];
+	private Card[] cards = new Card[21];
 
 	// variable used for singleton pattern
 		private static Board theInstance = new Board();
@@ -34,6 +35,10 @@ public class Board {
 	public Player[] getPlayers() {
 			return players;
 		}
+	
+	public Card[] getCards() {
+		return cards;
+	}
 	
 	private void calcAdjacencies() {
 		for(int i = 0; i < numRows; i++) {
@@ -146,10 +151,14 @@ public class Board {
 	public void setPlayerConfig(String playerCon) {
 		playerConfigFile = playerCon;
 	}
+	
+	public void setCardConfig(String cardCon) {
+		cardConfigFile = cardCon;
+	}
 
 	public void initialize() {
-		FileReader roomin, boardin, playerin;
-		Scanner Roomin1 = null, Boardin1 = null, Playerin1 = null;
+		FileReader roomin, boardin, playerin, cardin;
+		Scanner Roomin1 = null, Boardin1 = null, Playerin1 = null, Cardin1 = null;
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
@@ -161,6 +170,9 @@ public class Board {
 			if(playerConfigFile != null){
 				playerin = new FileReader(playerConfigFile);
 				Playerin1 = new Scanner(playerin);
+			}
+			if(cardConfigFile != null){
+				//TODO: Add stuff
 			}
 			Roomin1 = new Scanner(roomin);
 			Boardin1 = new Scanner(boardin);

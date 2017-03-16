@@ -8,6 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.Player;
 
 public class JHASv2_GameSetupTests {
@@ -43,4 +45,45 @@ public class JHASv2_GameSetupTests {
 		assertEquals(players[2].getRow(), 19); //testing row
 		assertEquals(players[5].getRow(), 2); //testing row
 	}
+
+
+	@Test
+	public void loadCardsTest() {
+		
+		assertEquals(board.getCards().length, 21); //testing deck size
+		
+		int people = 0;
+		int weapon = 0;
+		int room = 0;
+		for(int i = 0; i < board.getCards().length; i++){
+			if(board.getCards()[i].getCardType() == CardType.PERSON){
+				people++;
+			}
+			if(board.getCards()[i].getCardType() == CardType.WEAPON){
+				weapon++;
+			}
+			if(board.getCards()[i].getCardType() == CardType.ROOM){
+				room++;
+			}
+		}
+		
+		//Testing correct number of types of card
+		assertEquals(people, 6);
+		assertEquals(weapon, 6);
+		assertEquals(room, 9);
+		
+		//Testing that deck contains actual cards
+		assertEquals(board.getCards()[4].getCardName(), "Mr. Green");
+		assertEquals(board.getCards()[11].getCardName(), "Candlestick");
+		assertEquals(board.getCards()[17].getCardName(), "Attic");
+
+	}
 }
+
+
+
+
+
+
+
+
