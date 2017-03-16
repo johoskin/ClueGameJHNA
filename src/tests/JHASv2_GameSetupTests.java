@@ -90,6 +90,9 @@ public class JHASv2_GameSetupTests {
 			}
 		}
 		
+		//test the solution is dealt
+		
+		
 		//All players have same amt of cards (roughly)
 		int cardTestNum = board.getPlayers()[0].getMyCards().size();
 		for(int i = 1; i < board.getPlayers().length; i++){

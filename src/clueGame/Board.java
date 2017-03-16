@@ -24,7 +24,7 @@ public class Board {
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
 	private Player[] players = new Player[6];
 	private static ArrayList<Card> cards = new ArrayList<Card>();
-	public Solution solution;
+	public Solution solution = new Solution();
 
 	// variable used for singleton pattern
 		private static Board theInstance = new Board();
