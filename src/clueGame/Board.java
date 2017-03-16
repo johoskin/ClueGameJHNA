@@ -17,6 +17,7 @@ public class Board {
 	private Set<BoardCell> visited; //visited cells
 	private Set<BoardCell> targets; //targets for the player to move to
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
+	private Player[] players = new Player[6];
 
 	// variable used for singleton pattern
 		private static Board theInstance = new Board();
@@ -25,6 +26,10 @@ public class Board {
 		// this method returns the only Board
 		public static Board getInstance() {
 			return theInstance;
+		}
+	
+	public Player[] getPlayers() {
+			return players;
 		}
 	
 	private void calcAdjacencies() {
@@ -203,5 +208,19 @@ public class Board {
 	public int getNumColumns() {
 		// TODO Auto-generated method stub
 		return numColumns;
+	}
+	
+	public void selectAnswer() {
+		
+	}
+	
+	public Card handleSuggestion() {
+		Card card = new Card();
+		return card;
+	}
+	
+	public boolean checkAccusation(Solution accusation) {
+		
+		return false;
 	}
 }
