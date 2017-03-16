@@ -90,7 +90,15 @@ public class JHASv2_GameSetupTests {
 			}
 		}
 		
-		//test the solution is dealt
+		//test no player has solution
+		for(int i = 0; i < board.getPlayers().length; i++){
+			for(int j =0; j < board.getPlayers()[i].getMyCards().size(); j++) {
+				if(board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.person) || board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.room) || board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.weapon)) {
+					fail();
+				}
+			}
+		}
+		
 		
 		
 		//All players have same amt of cards (roughly)
