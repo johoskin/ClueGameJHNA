@@ -172,7 +172,8 @@ public class Board {
 				Playerin1 = new Scanner(playerin);
 			}
 			if(cardConfigFile != null){
-				//TODO: Add stuff
+				cardin = new FileReader(cardConfigFile);
+				Cardin1 = new Scanner(cardin);
 			}
 			Roomin1 = new Scanner(roomin);
 			Boardin1 = new Scanner(boardin);
@@ -229,6 +230,20 @@ public class Board {
 				Color color = stringToColor(str[1]);
 				players[j] = new Player(str[0], row, col, color);
 				j++;
+			}
+		}
+		
+		int k = 0;
+		if(cardConfigFile != null){
+			while(Cardin1.hasNextLine()) {
+				String[] str = Cardin1.nextLine().split(",");
+				for(int i = 0; i < str.length; i++) {
+					str[i] = str[i].trim();
+				}
+				CardType ret_val;
+				ret_val = CardType.valueOf(str[0]);
+				cards[k] = new Card(str[1], ret_val);
+				k++;
 			}
 		}
 	}

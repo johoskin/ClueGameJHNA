@@ -22,6 +22,7 @@ public class JHASv2_GameSetupTests {
 		// set the file names to use my config files
 		board.setConfigFiles("ASTS_ClueLayout.csv", "ASTS_ClueLegend.txt");	
 		board.setPlayerConfig("JHASv2_CluePlayer.txt");
+		board.setCardConfig("JHASv2_ClueCards.txt");
 		board.initialize();
 	}
 	
