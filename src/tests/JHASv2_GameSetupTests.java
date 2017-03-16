@@ -79,6 +79,45 @@ public class JHASv2_GameSetupTests {
 		assertEquals(board.getCards()[17].getCardName(), "Attic");
 
 	}
+	
+	@Test
+	public void dealCardsTest() {
+		
+		//All cards are dealt
+		for(int i = 0; i < board.getCards().length; i++){
+			if(board.getCards()[i].isDealt() == false){
+				fail();
+			}
+		}
+		
+		//All players have same amt of cards (roughly)
+		int cardTestNum = board.getPlayers()[0].getMyCards().length;
+		for(int i = 1; i < board.getPlayers().length; i++){
+			int compareCardNum = board.getPlayers()[i].getMyCards().length;
+			if(compareCardNum - cardTestNum <= 1 && compareCardNum - cardTestNum >= -1){
+				continue;
+			}
+			fail();
+		}
+		
+		//same card not given to multiple players
+		for(int i = 0; i < board.getPlayers().length; i++){
+			for(int j = 0; j < board.getPlayers().length; j++){
+				if(i != j){
+					for(int k = 0; k < board.getPlayers()[i].getMyCards().length; k++){
+						for(int l = 0; l < board.getPlayers()[j].getMyCards().length; l++){
+							if(board.getPlayers()[i].getMyCards()[k] == board.getPlayers()[j].getMyCards()[l]){
+								fail();
+							}else{
+								continue;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
 }
 
 

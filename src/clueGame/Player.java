@@ -6,6 +6,8 @@ public class Player {
 	private int row;
 	private int column;
 	private Color color;
+	private Card[] myCards = new Card[21];
+	private Card[] seenCards;
 	
 	public Player(String playerName, int row, int column, Color color){
 		this.playerName = playerName;
@@ -14,6 +16,10 @@ public class Player {
 		this.color = color;
 	}
 	
+	public Card[] getMyCards() {
+		return myCards;
+	}
+
 	public Card disproveSuggestion(Solution suggestion) {
 		Card card = new Card();
 		
