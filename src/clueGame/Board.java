@@ -24,6 +24,7 @@ public class Board {
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
 	private Player[] players = new Player[6];
 	private static ArrayList<Card> cards = new ArrayList<Card>();
+	public Solution solution;
 
 	// variable used for singleton pattern
 		private static Board theInstance = new Board();
@@ -293,9 +294,37 @@ public class Board {
 	
 	public void dealCards() {
 		Random randomGen = new Random();
+		int randomInt = randomGen.nextInt(cards.size());
+		do {
+			randomInt = randomGen.nextInt(cards.size());
+		if(cards.get(randomInt).getCardType() == CardType.PERSON) {
+			solution.person = cards.get(randomInt).getCardName();
+			cards.get(randomInt).setDealt(true);
+		}
+		}while (cards.get(randomInt).getCardType() != CardType.PERSON);
+		
+		do {
+			randomInt = randomGen.nextInt(cards.size());
+		if(cards.get(randomInt).getCardType() == CardType.ROOM) {
+			solution.room = cards.get(randomInt).getCardName();
+			cards.get(randomInt).setDealt(true);
+		}
+		}while (cards.get(randomInt).getCardType() != CardType.ROOM);
+		
+		do {
+			randomInt = randomGen.nextInt(cards.size());
+		if(cards.get(randomInt).getCardType() == CardType.WEAPON) {
+			solution.weapon = cards.get(randomInt).getCardName();
+			cards.get(randomInt).setDealt(true);
+		}
+		}while (cards.get(randomInt).getCardType() != CardType.WEAPON);
+		
+		
+		
+		
 		do {
 			for(int i = 0; i < players.length; i++) {
-				int randomInt = randomGen.nextInt(cards.size());
+				randomInt = randomGen.nextInt(cards.size());
 				while(cards.get(randomInt).isDealt()){
 					randomInt = randomGen.nextInt(cards.size());
 				}
