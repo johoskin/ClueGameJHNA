@@ -13,6 +13,11 @@ public class BoardCell {
 		this.DD = DoorDirection.NONE;
 	}
 	
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", column=" + column + ", initial=" + initial + ", DD=" + DD + "]";
+	}
+
 	public BoardCell(int r, int c, char ini) {
 		super();
 		this.row = r;

@@ -10,6 +10,10 @@ public class Player {
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	private Card[] seenCards;
 	
+	public Player(){
+		
+	}
+	
 	public Player(String playerName, int row, int column, Color color){
 		this.playerName = playerName;
 		this.row = row;
