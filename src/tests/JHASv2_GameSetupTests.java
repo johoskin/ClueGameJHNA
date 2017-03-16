@@ -51,19 +51,19 @@ public class JHASv2_GameSetupTests {
 	@Test
 	public void loadCardsTest() {
 		
-		assertEquals(board.getCards().length, 21); //testing deck size
+		assertEquals(board.getCards().size(), 21); //testing deck size
 		
 		int people = 0;
 		int weapon = 0;
 		int room = 0;
-		for(int i = 0; i < board.getCards().length; i++){
-			if(board.getCards()[i].getCardType() == CardType.PERSON){
+		for(int i = 0; i < board.getCards().size(); i++){
+			if(board.getCards().get(i).getCardType() == CardType.PERSON){
 				people++;
 			}
-			if(board.getCards()[i].getCardType() == CardType.WEAPON){
+			if(board.getCards().get(i).getCardType() == CardType.WEAPON){
 				weapon++;
 			}
-			if(board.getCards()[i].getCardType() == CardType.ROOM){
+			if(board.getCards().get(i).getCardType() == CardType.ROOM){
 				room++;
 			}
 		}
@@ -74,9 +74,9 @@ public class JHASv2_GameSetupTests {
 		assertEquals(room, 9);
 		
 		//Testing that deck contains actual cards
-		assertEquals(board.getCards()[4].getCardName(), "Mr. Green");
-		assertEquals(board.getCards()[11].getCardName(), "Candlestick");
-		assertEquals(board.getCards()[17].getCardName(), "Attic");
+		assertEquals(board.getCards().get(4).getCardName(), "Mr. Green");
+		assertEquals(board.getCards().get(11).getCardName(), "Candlestick");
+		assertEquals(board.getCards().get(17).getCardName(), "Attic");
 
 	}
 	
@@ -84,17 +84,18 @@ public class JHASv2_GameSetupTests {
 	public void dealCardsTest() {
 		
 		//All cards are dealt
-		for(int i = 0; i < board.getCards().length; i++){
-			if(board.getCards()[i].isDealt() == false){
+		for(int i = 0; i < board.getCards().size(); i++){
+			if(board.getCards().get(i).isDealt() == false){
 				fail();
 			}
 		}
 		
 		//All players have same amt of cards (roughly)
-		int cardTestNum = board.getPlayers()[0].getMyCards().length;
+		int cardTestNum = board.getPlayers()[0].getMyCards().size();
 		for(int i = 1; i < board.getPlayers().length; i++){
-			int compareCardNum = board.getPlayers()[i].getMyCards().length;
+			int compareCardNum = board.getPlayers()[i].getMyCards().size();
 			if(compareCardNum - cardTestNum <= 1 && compareCardNum - cardTestNum >= -1){
+				//System.out.println(compareCardNum - cardTestNum);
 				continue;
 			}
 			fail();
@@ -104,9 +105,9 @@ public class JHASv2_GameSetupTests {
 		for(int i = 0; i < board.getPlayers().length; i++){
 			for(int j = 0; j < board.getPlayers().length; j++){
 				if(i != j){
-					for(int k = 0; k < board.getPlayers()[i].getMyCards().length; k++){
-						for(int l = 0; l < board.getPlayers()[j].getMyCards().length; l++){
-							if(board.getPlayers()[i].getMyCards()[k] == board.getPlayers()[j].getMyCards()[l]){
+					for(int k = 0; k < board.getPlayers()[i].getMyCards().size(); k++){
+						for(int l = 0; l < board.getPlayers()[j].getMyCards().size(); l++){
+							if(board.getPlayers()[i].getMyCards().get(k) == board.getPlayers()[j].getMyCards().get(l)){
 								fail();
 							}else{
 								continue;

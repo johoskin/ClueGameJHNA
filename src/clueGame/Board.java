@@ -5,11 +5,13 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Random;
 
 public class Board {
 	private int numRows, numColumns;
@@ -21,7 +23,7 @@ public class Board {
 	private Set<BoardCell> targets; //targets for the player to move to
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
 	private Player[] players = new Player[6];
-	private Card[] cards = new Card[21];
+	private static ArrayList<Card> cards = new ArrayList<Card>();
 
 	// variable used for singleton pattern
 		private static Board theInstance = new Board();
@@ -36,7 +38,7 @@ public class Board {
 			return players;
 		}
 	
-	public Card[] getCards() {
+	public ArrayList<Card> getCards() {
 		return cards;
 	}
 	
@@ -242,10 +244,15 @@ public class Board {
 				}
 				CardType ret_val;
 				ret_val = CardType.valueOf(str[0]);
-				cards[k] = new Card(str[1], ret_val);
+				Card tempCard = new Card(str[1], ret_val);
+				cards.add(tempCard);
 				k++;
 			}
 		}
+		if(cardConfigFile != null) {
+			dealCards();
+		}
+		
 	}
 	
 	public static Color stringToColor(final String value){
@@ -283,6 +290,30 @@ public class Board {
 		return numColumns;
 	}
 	
+	
+	public void dealCards() {
+		Random randomGen = new Random();
+		do {
+			for(int i = 0; i < players.length; i++) {
+				int randomInt = randomGen.nextInt(cards.size());
+				while(cards.get(randomInt).isDealt()){
+					randomInt = randomGen.nextInt(cards.size());
+				}
+					//System.out.println(cards.get(randomInt).toString());
+					players[i].getMyCards().add(cards.get(randomInt));
+					cards.get(randomInt).setDealt(true);
+					
+				if(isDeckOpen() == false){
+					break;
+				}
+				
+			}
+			
+		} while (isDeckOpen());
+		
+		
+	}
+	
 	public void selectAnswer() {
 		
 	}
@@ -294,6 +325,15 @@ public class Board {
 	
 	public boolean checkAccusation(Solution accusation) {
 		
+		return false;
+	}
+	
+	public boolean isDeckOpen() {
+		for(int i = 0; i < cards.size(); i++) {
+			if(cards.get(i).isDealt() == false) {
+				return true;
+			}
+		}
 		return false;
 	}
 }
