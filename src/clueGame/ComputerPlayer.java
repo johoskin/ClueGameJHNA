@@ -1,13 +1,15 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
 	//SUGGESTION FOR CODE
 	
-	private BoardCell lastVisitedOn = new BoardCell(4, 0);
+	private BoardCell lastVisitedOn = new BoardCell();
 	
 	//SUGGESTION FOR CODE
 	
@@ -29,8 +31,33 @@ public class ComputerPlayer extends Player {
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
-		BoardCell cell = new BoardCell(0, 5, 'W');
-		return cell;
+		ArrayList<BoardCell> tempArr = new ArrayList<BoardCell>();
+		for(BoardCell s: targets){
+			tempArr.add(s);
+		}
+		//System.out.println(tempArr.toString());
+		//System.out.println(tempArr.size());
+		Random randomGen = new Random();
+		BoardCell loc = new BoardCell();
+		//int randInt = randomGen.nextInt(tempArr.size());
+		
+		
+		for(BoardCell s:targets) {
+			if(s.isRoom() && lastVisitedOn.isRoom()) {
+				int randInt = randomGen.nextInt(tempArr.size());
+				loc = tempArr.get(randInt);
+			}
+			else if (s.isRoom() && !lastVisitedOn.isRoom()) {
+				loc = s;
+				return loc;
+			}
+			else {
+				int randInt = randomGen.nextInt(tempArr.size());
+				loc = tempArr.get(randInt);
+			}
+		}
+		
+		return loc;
 	}
 	
 	public void makeAccusation() {
@@ -40,4 +67,5 @@ public class ComputerPlayer extends Player {
 	public void createSuggestion() {
 		
 	}
+
 }

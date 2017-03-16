@@ -4,6 +4,10 @@ public class BoardCell {
 	int row,column;
 	char initial;
 	DoorDirection DD;
+	
+	public BoardCell() {
+		
+	}
 
 	public BoardCell(int r, int c) {
 		super();
