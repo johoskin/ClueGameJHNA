@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,7 +15,7 @@ public class Board {
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private Map<Character, String> legend;
-	private String boardConfigFile, roomConfigFile;
+	private String boardConfigFile, roomConfigFile, playerConfigFile;
 	private Map<BoardCell, Set<BoardCell>> adjMtx; //adjacency matrix
 	private Set<BoardCell> visited; //visited cells
 	private Set<BoardCell> targets; //targets for the player to move to
@@ -139,10 +142,14 @@ public class Board {
 		boardConfigFile = boardCon;
 		roomConfigFile = roomCon;
 	}
+	
+	public void setPlayerConfig(String playerCon) {
+		playerConfigFile = playerCon;
+	}
 
 	public void initialize() {
-		FileReader roomin, boardin;
-		Scanner Roomin1 = null, Boardin1 = null;
+		FileReader roomin, boardin, playerin;
+		Scanner Roomin1 = null, Boardin1 = null, Playerin1 = null;
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
@@ -151,6 +158,10 @@ public class Board {
 		try{
 			roomin = new FileReader(roomConfigFile);
 			boardin = new FileReader(boardConfigFile);
+			if(playerConfigFile != null){
+				playerin = new FileReader(playerConfigFile);
+				Playerin1 = new Scanner(playerin);
+			}
 			Roomin1 = new Scanner(roomin);
 			Boardin1 = new Scanner(boardin);
 		} catch(FileNotFoundException e) {
@@ -192,9 +203,44 @@ public class Board {
 			}
 			legend.put(str[0].toCharArray()[0], str[1]);
 		}
+		
 		calcAdjacencies();
+		int j = 0;
+		if(playerConfigFile != null){
+			while(Playerin1.hasNextLine()) {
+				String[] str = Playerin1.nextLine().split(",");
+				for(int i = 0; i < str.length; i++) {
+					str[i] = str[i].trim();
+				}
+				Integer row = new Integer(Integer.parseInt(str[2]));
+				Integer col = new Integer(Integer.parseInt(str[3]));
+				Color color = stringToColor(str[1]);
+				players[j] = new Player(str[0], row, col, color);
+				j++;
+			}
+		}
 	}
-
+	
+	public static Color stringToColor(final String value){
+		if (value == null){
+			return Color.black;
+		}
+		try{
+			
+			return Color.decode(value);
+			
+		}catch(NumberFormatException nfe){
+			try{
+				final Field f = Color.class.getField(value);
+				
+				return (Color) f.get(null);
+			}catch (Exception ce){
+				return Color.black;
+			}
+		}
+		
+	}
+	
 	public Map<Character, String> getLegend() {
 		// TODO Auto-generated method stub
 		return legend;
