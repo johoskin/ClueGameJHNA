@@ -7,8 +7,24 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
+	private String suggPerson;
+	private String suggRoom;
+	private String suggWeapon;
+	
 	//SUGGESTION FOR CODE
 	
+	public String getSuggPerson() {
+		return suggPerson;
+	}
+
+	public String getSuggRoom() {
+		return suggRoom;
+	}
+
+	public String getSuggWeapon() {
+		return suggWeapon;
+	}
+
 	private BoardCell lastVisitedOn = new BoardCell();
 	
 	//SUGGESTION FOR CODE
@@ -60,7 +76,7 @@ public class ComputerPlayer extends Player {
 		return loc;
 	}
 	
-	public void makeAccusation() {
+	public void makeAccusation(String person, String weapon, String room) {
 		
 	}
 	

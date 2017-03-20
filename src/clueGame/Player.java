@@ -10,6 +10,7 @@ public class Player {
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	private Card[] seenCards;
 	
+	
 	public Player(){
 		
 	}
