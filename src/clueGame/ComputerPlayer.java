@@ -76,8 +76,10 @@ public class ComputerPlayer extends Player {
 		return loc;
 	}
 	
-	public void makeAccusation(String person, String weapon, String room) {
-		
+	public void makeAccusation(String person, String room, String weapon) {
+		suggPerson = person;
+		suggWeapon = weapon;
+		suggRoom = room;
 	}
 	
 	public void createSuggestion() {
