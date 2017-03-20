@@ -312,10 +312,13 @@ public class JHASv2_GameActionTests {
 		hand.add(board.getCards().get(6));
 		hand.add(board.getCards().get(12));
 		
+		player.setMyCards(hand);
+		
+		
+		
 		Card tempCard = new Card();
 		tempCard = player.disproveSuggestion(sol);
-		
-		assertTrue(tempCard.equals(hand.get(0)));
+		assertTrue(tempCard.equals(player.getMyCards().get(0)));
 		
 		//no matching cards
 		hand.clear();
@@ -325,8 +328,7 @@ public class JHASv2_GameActionTests {
 		hand.add(board.getCards().get(12));
 		
 		tempCard = player.disproveSuggestion(sol);
-		assertTrue(tempCard.equals(null));
-		
+		assertEquals(tempCard, null);
 		//multiple matching cards
 		
 		hand.clear();
@@ -344,11 +346,11 @@ public class JHASv2_GameActionTests {
 		
 		for(int i = 0; i < 300; i++) {
 			tempCard = player.disproveSuggestion(sol);
-			if(tempCard.equals(hand.get(0))) {
+			if(tempCard.equals(player.getMyCards().get(0))) {
 				mustard = mustard + 1;
-			} else if(tempCard.equals(hand.get(2))) {
+			} else if(tempCard.equals(player.getMyCards().get(2))) {
 				game = game + 1;
-			} else if(tempCard.equals(hand.get(3))) {
+			} else if(tempCard.equals(player.getMyCards().get(3))) {
 				wrench = wrench + 1;
 			}
 		}

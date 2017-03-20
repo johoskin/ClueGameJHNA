@@ -1,6 +1,7 @@
 package clueGame;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
 	private String playerName;
@@ -44,11 +45,45 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
-		Card card = new Card();
+		ArrayList<Card> matching = new ArrayList<Card>();
+		for(int i = 0; i < myCards.size(); i++){
+			
+			if(getMyCards().get(i).getCardType() == CardType.PERSON){
+				if(myCards.get(i).getCardName().equals(suggestion.person)){
+					matching.add(getMyCards().get(i));
+				}
+			}
+			
+			if(myCards.get(i).getCardType() == CardType.WEAPON){
+				if(myCards.get(i).getCardName().equals(suggestion.weapon)){
+					matching.add(getMyCards().get(i));
+				}
+			}
+			
+			if(getMyCards().get(i).getCardType() == CardType.ROOM){
+				if(getMyCards().get(i).getCardName().equals(suggestion.room)){
+					matching.add(getMyCards().get(i));
+				}
+			}
+			
+		}
 		
-		return card;
+		if(matching.size() == 0){
+			return null;
+		}
+		
+		if(matching.size() == 1){
+			return matching.get(0);
+		}
+		Random randomGen = new Random();
+		int randomInt = randomGen.nextInt(matching.size());
+		return matching.get(randomInt);
 	}
 
+
+	public void setMyCards(ArrayList<Card> myCards) {
+		this.myCards = myCards;
+	}
 
 	public String getPlayerName() {
 		return playerName;
