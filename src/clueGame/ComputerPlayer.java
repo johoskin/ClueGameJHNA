@@ -10,7 +10,16 @@ public class ComputerPlayer extends Player {
 	private String suggPerson;
 	private String suggRoom;
 	private String suggWeapon;
+	public Solution mySolution = new Solution();
 	
+	public Solution getMySolution() {
+		return mySolution;
+	}
+
+	public void setMySolution(Solution mySolution) {
+		this.mySolution = mySolution;
+	}
+
 	private Card[] seen = new Card[22];
 	
 	//SUGGESTION FOR CODE
@@ -77,12 +86,24 @@ public class ComputerPlayer extends Player {
 		return loc;
 	}
 	
-	public void makeAccusation(String person, String room, String weapon) {
-		suggPerson = person;
-		suggWeapon = weapon;
-		suggRoom = room;
+	public void makeAccusation() {
+		mySolution.person = suggPerson;
+		mySolution.room = suggRoom;
+		mySolution.weapon = suggWeapon;
 	}
 	
+	public void setSuggPerson(String suggPerson) {
+		this.suggPerson = suggPerson;
+	}
+
+	public void setSuggRoom(String suggRoom) {
+		this.suggRoom = suggRoom;
+	}
+
+	public void setSuggWeapon(String suggWeapon) {
+		this.suggWeapon = suggWeapon;
+	}
+
 	public void createSuggestion(ArrayList<Card> seenCards, ArrayList<Card> unSeenCards, Card roomCard) {
 		Random randomGen = new Random();
 		//System.out.println(unSeenCards.size());

@@ -353,7 +353,9 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
-		
+		if(solution.person == accusation.person && solution.room == accusation.room && solution.weapon == accusation.weapon) {
+			return true;
+		}
 		return false;
 	}
 	
