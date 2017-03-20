@@ -10,6 +10,8 @@ public class ComputerPlayer extends Player {
 	private String suggPerson;
 	private String suggRoom;
 	private String suggWeapon;
+	private Card[] hand = new Card[22];
+	private Card[] seen = new Card[22];
 	
 	//SUGGESTION FOR CODE
 	
@@ -43,7 +45,6 @@ public class ComputerPlayer extends Player {
 	
 	public ComputerPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
-		// TODO Auto-generated constructor stub
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -82,7 +83,7 @@ public class ComputerPlayer extends Player {
 		suggRoom = room;
 	}
 	
-	public void createSuggestion() {
+	public void createSuggestion(ArrayList<Card> seenCards) {
 		
 	}
 

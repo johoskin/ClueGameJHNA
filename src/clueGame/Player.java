@@ -7,10 +7,18 @@ public class Player {
 	private int row;
 	private int column;
 	private Color color;
-	private ArrayList<Card> myCards = new ArrayList<Card>();
-	private Card[] seenCards;
+	protected ArrayList<Card> myCards = new ArrayList<Card>();
+	protected ArrayList<Card> seenCards = new ArrayList<Card>();
 	
 	
+	public ArrayList<Card> getSeenCards() {
+		return seenCards;
+	}
+
+	public void setSeenCards(ArrayList<Card> seenCards) {
+		this.seenCards = seenCards;
+	}
+
 	public Player(){
 		
 	}
