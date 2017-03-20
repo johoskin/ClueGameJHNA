@@ -9,8 +9,17 @@ public class Player {
 	private Color color;
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	protected ArrayList<Card> seenCards = new ArrayList<Card>();
+	protected ArrayList<Card> unSeenCards = new ArrayList<Card>();
 	
 	
+	public ArrayList<Card> getUnSeenCards() {
+		return unSeenCards;
+	}
+
+	public void setUnSeenCards(ArrayList<Card> unSeenCards) {
+		this.unSeenCards = unSeenCards;
+	}
+
 	public ArrayList<Card> getSeenCards() {
 		return seenCards;
 	}

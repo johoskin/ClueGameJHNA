@@ -10,7 +10,7 @@ public class ComputerPlayer extends Player {
 	private String suggPerson;
 	private String suggRoom;
 	private String suggWeapon;
-	private Card[] hand = new Card[22];
+	
 	private Card[] seen = new Card[22];
 	
 	//SUGGESTION FOR CODE
@@ -83,8 +83,35 @@ public class ComputerPlayer extends Player {
 		suggRoom = room;
 	}
 	
-	public void createSuggestion(ArrayList<Card> seenCards) {
-		
+	public void createSuggestion(ArrayList<Card> seenCards, ArrayList<Card> unSeenCards, Card roomCard) {
+		Random randomGen = new Random();
+		//System.out.println(unSeenCards.size());
+		int randomInt = randomGen.nextInt(unSeenCards.size());
+		if(unSeenCards.size() > 1) {
+			do {
+				randomInt = randomGen.nextInt(unSeenCards.size());
+				if(unSeenCards.get(randomInt).getCardType() == CardType.PERSON ) {
+					suggPerson = unSeenCards.get(randomInt).getCardName();
+				}
+			}while (unSeenCards.get(randomInt).getCardType() != CardType.PERSON);
+
+			do {
+				randomInt = randomGen.nextInt(unSeenCards.size());
+				if(unSeenCards.get(randomInt).getCardType() == CardType.WEAPON) {
+					suggWeapon = unSeenCards.get(randomInt).getCardName();
+				}
+			}while (unSeenCards.get(randomInt).getCardType() != CardType.WEAPON);
+		}else {
+			if(unSeenCards.get(0).getCardType() == CardType.PERSON) {
+				suggPerson = unSeenCards.get(0).getCardName();
+			}
+			if(unSeenCards.get(0).getCardType() == CardType.WEAPON) {
+				suggWeapon = unSeenCards.get(0).getCardName();
+			}
+		}
+
+		suggRoom = roomCard.getCardName();
+
 	}
 
 }
