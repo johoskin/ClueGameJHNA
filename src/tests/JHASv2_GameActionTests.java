@@ -14,6 +14,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Solution;
 
 public class JHASv2_GameActionTests {
@@ -326,6 +327,7 @@ public class JHASv2_GameActionTests {
 		hand.add(board.getCards().get(2));
 		hand.add(board.getCards().get(6));
 		hand.add(board.getCards().get(12));
+		player.setMyCards(hand);
 		
 		tempCard = player.disproveSuggestion(sol);
 		assertEquals(tempCard, null);
@@ -339,6 +341,7 @@ public class JHASv2_GameActionTests {
 		hand.add(board.getCards().get(2));
 		hand.add(board.getCards().get(6));
 		hand.add(board.getCards().get(12));
+		player.setMyCards(hand);
 		
 		int mustard = 0;
 		int wrench = 0;
@@ -366,4 +369,62 @@ public class JHASv2_GameActionTests {
 	}
 
 	//TODO: Test - handle suggestion
+	@Test
+	public void testHandleSuggestion() {
+		
+		HumanPlayer p1 = new HumanPlayer();
+		ComputerPlayer p2 = new ComputerPlayer();
+		ComputerPlayer p3 = new ComputerPlayer();
+		
+		board.getPlayers()[0] = p1;
+		board.getPlayers()[1] = p2;
+		board.getPlayers()[2] = p3;
+		
+		
+		ArrayList<Card> hand = new ArrayList<Card>();
+
+		Solution sol = new Solution();
+		sol.person = "Colonel Mustard";
+		sol.room = "Game Room";
+		sol.weapon = "Wrench";
+
+		//no players can disprove
+		hand.add(board.getCards().get(1));
+		hand.add(board.getCards().get(6));
+		hand.add(board.getCards().get(16));
+		p1.setMyCards(hand);
+		
+		hand.clear();
+		hand.add(board.getCards().get(2));
+		hand.add(board.getCards().get(7));
+		hand.add(board.getCards().get(17));
+		p2.setMyCards(hand);
+		
+		hand.clear();
+		hand.add(board.getCards().get(3));
+		hand.add(board.getCards().get(8));
+		hand.add(board.getCards().get(18));
+		p3.setMyCards(hand);
+		
+		Card tempCard = new Card();
+		tempCard = board.handleSuggestion(sol, p1);
+		assertEquals(tempCard, null);
+		
+		//only accusing player can disprove
+		p1.getMyCards().add((board.getCards().get(0)));
+		tempCard = board.handleSuggestion(sol, p2);
+		assertEquals(tempCard, null);
+		
+		//only human can disprove, human is not the accuser
+		tempCard = board.handleSuggestion(sol, p2);
+		assertEquals(tempCard, "Colonel Mustard");
+		
+		//only human can disprove, human is the accuser
+		tempCard = board.handleSuggestion(sol, p1);
+		assertEquals(tempCard, null);
+		
+		
+		
+		
+	}
 }

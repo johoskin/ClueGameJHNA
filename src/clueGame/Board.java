@@ -347,7 +347,7 @@ public class Board {
 		
 	}
 	
-	public Card handleSuggestion() {
+	public Card handleSuggestion(Solution sol, Player accuser) {
 		Card card = new Card();
 		return card;
 	}
