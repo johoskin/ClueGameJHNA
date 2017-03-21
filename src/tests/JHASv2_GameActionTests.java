@@ -406,6 +406,7 @@ public class JHASv2_GameActionTests {
 		hand.add(board.getCards().get(18));
 		p3.setMyCards(hand);
 		
+		//no players can disprove
 		Card tempCard = new Card();
 		tempCard = board.handleSuggestion(sol, p1);
 		assertEquals(tempCard, null);
@@ -417,11 +418,25 @@ public class JHASv2_GameActionTests {
 		
 		//only human can disprove, human is not the accuser
 		tempCard = board.handleSuggestion(sol, p2);
-		assertEquals(tempCard, "Colonel Mustard");
+		assertEquals(tempCard.getCardName(), "Colonel Mustard");
 		
 		//only human can disprove, human is the accuser
 		tempCard = board.handleSuggestion(sol, p1);
 		assertEquals(tempCard, null);
+		
+		//two players can disprove, correct player (next in list) returns answer
+		p2.getMyCards().add((board.getCards().get(14)));
+		p3.getMyCards().add((board.getCards().get(10)));
+		tempCard = board.handleSuggestion(sol, p1);
+		assertEquals(tempCard.getCardName(), "Game Room");
+		
+		//players are queried in order (human and another player can disprove, ensure
+		//other player who is next in list returns answer
+		p2.getMyCards().remove(3);
+		tempCard = board.handleSuggestion(sol, p2);
+		assertEquals(tempCard.getCardName(), "Wrench");
+		
+		
 		
 		
 		
