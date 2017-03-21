@@ -347,9 +347,45 @@ public class Board {
 		
 	}
 	
-	public Card handleSuggestion(Solution sol, Player accuser) {
-		Card card = new Card();
-		return card;
+	public Card handleSuggestion(Solution sol, Player accuser, ArrayList<Player> plrs) {
+		
+		
+		for(int i = 0; i < plrs.size(); i++) {
+			for(int j = 0; j < plrs.get(i).getMyCards().size(); j++){
+				
+				if(plrs.get(i).getMyCards().get(j).getCardType() == CardType.PERSON){
+					if(plrs.get(i).getMyCards().get(j).getCardName().equals(sol.person)){
+						if(plrs.get(i).equals(accuser)){
+							return null;
+						}
+						return plrs.get(i).getMyCards().get(j);
+					}
+				}
+				
+				if(plrs.get(i).getMyCards().get(j).getCardType() == CardType.WEAPON){
+					if(plrs.get(i).getMyCards().get(j).getCardName().equals(sol.weapon)){
+						if(plrs.get(i).equals(accuser)){
+							return null;
+						}
+						return plrs.get(i).getMyCards().get(j);
+					}
+				}
+				
+				if(plrs.get(i).getMyCards().get(j).getCardType() == CardType.ROOM){
+					if(plrs.get(i).getMyCards().get(j).getCardName().equals(sol.room)){
+						if(plrs.get(i).equals(accuser)){
+							return null;
+						}
+						return plrs.get(i).getMyCards().get(j);
+					}
+				}
+				
+				
+				
+				
+			}
+		}
+		return null;
 	}
 	
 	public boolean checkAccusation(Solution accusation) {

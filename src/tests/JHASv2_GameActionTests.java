@@ -15,6 +15,7 @@ import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
+import clueGame.Player;
 import clueGame.Solution;
 
 public class JHASv2_GameActionTests {
@@ -220,7 +221,7 @@ public class JHASv2_GameActionTests {
 		testUnSeen.add(board.getCards().get(0));
 		testUnSeen.add(board.getCards().get(8));
 		testUnSeen.add(board.getCards().get(18));
-		System.out.println(board.getCards().get(11).getCardName());
+		//System.out.println(board.getCards().get(11).getCardName());
 		testUnSeen.add(board.getCards().get(11));
 		testUnSeen.add(board.getCards().get(10));
 		testUnSeen.add(board.getCards().get(9));
@@ -279,7 +280,7 @@ public class JHASv2_GameActionTests {
 				candle = candle + 1;
 			}
 		}
-		System.out.println(mustard + " " + wrench + " " + pipe + " " + candle);
+		//System.out.println(mustard + " " + wrench + " " + pipe + " " + candle);
 		//System.out.println(plum + " " + knife + " " + rope + " ");
 		assertTrue(candle > 0);
 		assertTrue(wrench > 0);
@@ -375,13 +376,16 @@ public class JHASv2_GameActionTests {
 		HumanPlayer p1 = new HumanPlayer();
 		ComputerPlayer p2 = new ComputerPlayer();
 		ComputerPlayer p3 = new ComputerPlayer();
+		ArrayList<Player> tempPlayers = new ArrayList<Player>();
 		
-		board.getPlayers()[0] = p1;
-		board.getPlayers()[1] = p2;
-		board.getPlayers()[2] = p3;
+		tempPlayers.add(p1);
+		tempPlayers.add(p2);
+		tempPlayers.add(p3);
 		
 		
-		ArrayList<Card> hand = new ArrayList<Card>();
+		ArrayList<Card> hand1 = new ArrayList<Card>();
+		ArrayList<Card> hand2 = new ArrayList<Card>();
+		ArrayList<Card> hand3 = new ArrayList<Card>();
 
 		Solution sol = new Solution();
 		sol.person = "Colonel Mustard";
@@ -389,51 +393,75 @@ public class JHASv2_GameActionTests {
 		sol.weapon = "Wrench";
 
 		//no players can disprove
-		hand.add(board.getCards().get(1));
-		hand.add(board.getCards().get(6));
-		hand.add(board.getCards().get(16));
-		p1.setMyCards(hand);
+		hand1.add(board.getCards().get(1));
+		hand1.add(board.getCards().get(6));
+		hand1.add(board.getCards().get(16));
+		tempPlayers.get(0).setMyCards(hand1);
 		
-		hand.clear();
-		hand.add(board.getCards().get(2));
-		hand.add(board.getCards().get(7));
-		hand.add(board.getCards().get(17));
-		p2.setMyCards(hand);
+		//hand1.clear();
+		//for(int i = 0 ; i < board.getCards().size(); i++) {
+		//	System.out.println(i + " " + board.getCards().get(i).getCardName());
+		//}
 		
-		hand.clear();
-		hand.add(board.getCards().get(3));
-		hand.add(board.getCards().get(8));
-		hand.add(board.getCards().get(18));
-		p3.setMyCards(hand);
+		hand2.add(board.getCards().get(2));
+		hand2.add(board.getCards().get(7));
+		hand2.add(board.getCards().get(17));
+		tempPlayers.get(1).setMyCards(hand2);
+		
+		//hand2.clear();
+		hand3.add(board.getCards().get(3));
+		hand3.add(board.getCards().get(8));
+		hand3.add(board.getCards().get(18));
+		tempPlayers.get(2).setMyCards(hand3);
 		
 		//no players can disprove
 		Card tempCard = new Card();
-		tempCard = board.handleSuggestion(sol, p1);
-		assertEquals(tempCard, null);
+		tempCard = board.handleSuggestion(sol, p1, tempPlayers);
+		//System.out.println(tempCard.getCardName());
+		assertEquals(tempCard, (null));
 		
 		//only accusing player can disprove
-		p1.getMyCards().add((board.getCards().get(0)));
-		tempCard = board.handleSuggestion(sol, p2);
+		tempPlayers.get(0).getMyCards().add((board.getCards().get(0)));
+		tempCard = board.handleSuggestion(sol, tempPlayers.get(0), tempPlayers);
+		//System.out.println(tempCard.getCardName());
 		assertEquals(tempCard, null);
 		
 		//only human can disprove, human is not the accuser
-		tempCard = board.handleSuggestion(sol, p2);
+		tempCard = board.handleSuggestion(sol, p2, tempPlayers);
 		assertEquals(tempCard.getCardName(), "Colonel Mustard");
 		
 		//only human can disprove, human is the accuser
-		tempCard = board.handleSuggestion(sol, p1);
+		tempCard = board.handleSuggestion(sol, p1, tempPlayers);
 		assertEquals(tempCard, null);
 		
 		//two players can disprove, correct player (next in list) returns answer
-		p2.getMyCards().add((board.getCards().get(14)));
-		p3.getMyCards().add((board.getCards().get(10)));
-		tempCard = board.handleSuggestion(sol, p1);
+		tempPlayers.get(0).getMyCards().remove(board.getCards().get(0));
+		for(int i = 0 ; i < tempPlayers.get(0).getMyCards().size(); i++) {
+				System.out.println("player 1 " + i + " " + tempPlayers.get(0).getMyCards().get(i).getCardName());
+		}
+		tempPlayers.get(1).getMyCards().add((board.getCards().get(14)));
+		tempPlayers.get(2).getMyCards().add((board.getCards().get(10)));
+		
+		for(int i = 0 ; i < tempPlayers.get(1).getMyCards().size(); i++) {
+			System.out.println("player 2 " + i + " " + tempPlayers.get(1).getMyCards().get(i).getCardName());
+		}
+		
+		for(int i = 0 ; i < tempPlayers.get(2).getMyCards().size(); i++) {
+			System.out.println("player 3 " + i + " " + tempPlayers.get(2).getMyCards().get(i).getCardName());
+		}
+		
+		
+		tempCard = board.handleSuggestion(sol, tempPlayers.get(0), tempPlayers);
 		assertEquals(tempCard.getCardName(), "Game Room");
 		
 		//players are queried in order (human and another player can disprove, ensure
 		//other player who is next in list returns answer
-		p2.getMyCards().remove(3);
-		tempCard = board.handleSuggestion(sol, p2);
+		Player tempPlayer = new Player();
+		tempPlayer = p1;
+		tempPlayers.set(0, p2);
+		tempPlayers.set(1, tempPlayer);
+		tempPlayers.get(0).getMyCards().remove(3);
+		tempCard = board.handleSuggestion(sol, p2, tempPlayers);
 		assertEquals(tempCard.getCardName(), "Wrench");
 		
 		
