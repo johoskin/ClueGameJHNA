@@ -128,7 +128,7 @@ public class JHASv2_GameActionTests {
 		assertTrue(location14_14);
 		assertTrue(location14_16);
 		assertTrue(location13_15);
-		assertTrue(location15_15);
+		assertTrue(location15_15); //checking all locations were selected
 
 	}
 	
