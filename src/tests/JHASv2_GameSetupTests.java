@@ -92,8 +92,8 @@ public class JHASv2_GameSetupTests {
 		
 		//test no player has solution
 		for(int i = 0; i < board.getPlayers().length; i++){
-			for(int j =0; j < board.getPlayers()[i].getMyCards().size(); j++) {
-				if(board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.person) || board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.room) || board.getPlayers()[i].getMyCards().get(j).getCardName().equals(board.solution.weapon)) {
+			for(int j =0; j < board.getPlayers()[i].getCards().size(); j++) {
+				if(board.getPlayers()[i].getCards().get(j).getCardName().equals(board.solution.person) || board.getPlayers()[i].getCards().get(j).getCardName().equals(board.solution.room) || board.getPlayers()[i].getCards().get(j).getCardName().equals(board.solution.weapon)) {
 					fail();
 				}
 			}
@@ -102,9 +102,9 @@ public class JHASv2_GameSetupTests {
 		
 		
 		//All players have same amt of cards (roughly)
-		int cardTestNum = board.getPlayers()[0].getMyCards().size();
+		int cardTestNum = board.getPlayers()[0].getCards().size();
 		for(int i = 1; i < board.getPlayers().length; i++){
-			int compareCardNum = board.getPlayers()[i].getMyCards().size();
+			int compareCardNum = board.getPlayers()[i].getCards().size();
 			if(compareCardNum - cardTestNum <= 1 && compareCardNum - cardTestNum >= -1){
 				//System.out.println(compareCardNum - cardTestNum);
 				continue;
@@ -116,9 +116,9 @@ public class JHASv2_GameSetupTests {
 		for(int i = 0; i < board.getPlayers().length; i++){
 			for(int j = 0; j < board.getPlayers().length; j++){
 				if(i != j){
-					for(int k = 0; k < board.getPlayers()[i].getMyCards().size(); k++){
-						for(int l = 0; l < board.getPlayers()[j].getMyCards().size(); l++){
-							if(board.getPlayers()[i].getMyCards().get(k) == board.getPlayers()[j].getMyCards().get(l)){
+					for(int k = 0; k < board.getPlayers()[i].getCards().size(); k++){
+						for(int l = 0; l < board.getPlayers()[j].getCards().size(); l++){
+							if(board.getPlayers()[i].getCards().get(k) == board.getPlayers()[j].getCards().get(l)){
 								fail();
 							}else{
 								continue;

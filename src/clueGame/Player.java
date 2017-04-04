@@ -40,7 +40,7 @@ public class Player {
 		this.color = color;
 	}
 	
-	public ArrayList<Card> getMyCards() {
+	public ArrayList<Card> getCards() {
 		return myCards;
 	}
 
@@ -48,21 +48,21 @@ public class Player {
 		ArrayList<Card> matching = new ArrayList<Card>();
 		for(int i = 0; i < myCards.size(); i++){
 			
-			if(getMyCards().get(i).getCardType() == CardType.PERSON){
+			if(getCards().get(i).getCardType() == CardType.PERSON){
 				if(myCards.get(i).getCardName().equals(suggestion.person)){
-					matching.add(getMyCards().get(i));
+					matching.add(getCards().get(i));
 				}
 			}
 			
 			if(myCards.get(i).getCardType() == CardType.WEAPON){
 				if(myCards.get(i).getCardName().equals(suggestion.weapon)){
-					matching.add(getMyCards().get(i));
+					matching.add(getCards().get(i));
 				}
 			}
 			
-			if(getMyCards().get(i).getCardType() == CardType.ROOM){
-				if(getMyCards().get(i).getCardName().equals(suggestion.room)){
-					matching.add(getMyCards().get(i));
+			if(getCards().get(i).getCardType() == CardType.ROOM){
+				if(getCards().get(i).getCardName().equals(suggestion.room)){
+					matching.add(getCards().get(i));
 				}
 			}
 			

@@ -320,7 +320,7 @@ public class JHASv2_GameActionTests {
 		
 		Card tempCard = new Card();
 		tempCard = player.disproveSuggestion(sol);
-		assertTrue(tempCard.equals(player.getMyCards().get(0)));
+		assertTrue(tempCard.equals(player.getCards().get(0)));
 		
 		//no matching cards
 		hand.clear();
@@ -350,11 +350,11 @@ public class JHASv2_GameActionTests {
 		
 		for(int i = 0; i < 300; i++) {
 			tempCard = player.disproveSuggestion(sol);
-			if(tempCard.equals(player.getMyCards().get(0))) {
+			if(tempCard.equals(player.getCards().get(0))) {
 				mustard = mustard + 1;
-			} else if(tempCard.equals(player.getMyCards().get(2))) {
+			} else if(tempCard.equals(player.getCards().get(2))) {
 				game = game + 1;
-			} else if(tempCard.equals(player.getMyCards().get(3))) {
+			} else if(tempCard.equals(player.getCards().get(3))) {
 				wrench = wrench + 1;
 			}
 		}
@@ -421,7 +421,7 @@ public class JHASv2_GameActionTests {
 		assertEquals(tempCard, (null));
 		
 		//only accusing player can disprove
-		tempPlayers.get(0).getMyCards().add((board.getCards().get(0)));
+		tempPlayers.get(0).getCards().add((board.getCards().get(0)));
 		tempCard = board.handleSuggestion(sol, tempPlayers.get(0), tempPlayers);
 		//System.out.println(tempCard.getCardName());
 		assertEquals(tempCard, null);
@@ -435,19 +435,19 @@ public class JHASv2_GameActionTests {
 		assertEquals(tempCard, null);
 		
 		//two players can disprove, correct player (next in list) returns answer
-		tempPlayers.get(0).getMyCards().remove(board.getCards().get(0));
-		for(int i = 0 ; i < tempPlayers.get(0).getMyCards().size(); i++) {
-				System.out.println("player 1 " + i + " " + tempPlayers.get(0).getMyCards().get(i).getCardName());
+		tempPlayers.get(0).getCards().remove(board.getCards().get(0));
+		for(int i = 0 ; i < tempPlayers.get(0).getCards().size(); i++) {
+				System.out.println("player 1 " + i + " " + tempPlayers.get(0).getCards().get(i).getCardName());
 		}
-		tempPlayers.get(1).getMyCards().add((board.getCards().get(14)));
-		tempPlayers.get(2).getMyCards().add((board.getCards().get(10)));
+		tempPlayers.get(1).getCards().add((board.getCards().get(14)));
+		tempPlayers.get(2).getCards().add((board.getCards().get(10)));
 		
-		for(int i = 0 ; i < tempPlayers.get(1).getMyCards().size(); i++) {
-			System.out.println("player 2 " + i + " " + tempPlayers.get(1).getMyCards().get(i).getCardName());
+		for(int i = 0 ; i < tempPlayers.get(1).getCards().size(); i++) {
+			System.out.println("player 2 " + i + " " + tempPlayers.get(1).getCards().get(i).getCardName());
 		}
 		
-		for(int i = 0 ; i < tempPlayers.get(2).getMyCards().size(); i++) {
-			System.out.println("player 3 " + i + " " + tempPlayers.get(2).getMyCards().get(i).getCardName());
+		for(int i = 0 ; i < tempPlayers.get(2).getCards().size(); i++) {
+			System.out.println("player 3 " + i + " " + tempPlayers.get(2).getCards().get(i).getCardName());
 		}
 		
 		
@@ -460,7 +460,7 @@ public class JHASv2_GameActionTests {
 		tempPlayer = p1;
 		tempPlayers.set(0, p2);
 		tempPlayers.set(1, tempPlayer);
-		tempPlayers.get(0).getMyCards().remove(3);
+		tempPlayers.get(0).getCards().remove(3);
 		tempCard = board.handleSuggestion(sol, p2, tempPlayers);
 		assertEquals(tempCard.getCardName(), "Wrench");
 		

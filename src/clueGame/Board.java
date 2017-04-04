@@ -324,7 +324,7 @@ public class Board {
 					randomInt = randomGen.nextInt(cards.size());
 				}
 
-					players[i].getMyCards().add(cards.get(randomInt));
+					players[i].getCards().add(cards.get(randomInt));
 					cards.get(randomInt).setDealt(true);
 					
 				if(isDeckOpen() == false){
@@ -345,32 +345,32 @@ public class Board {
 		
 		
 		for(Player s : plrs) {
-			for(int j = 0; j < s.getMyCards().size(); j++){
+			for(int j = 0; j < s.getCards().size(); j++){
 
-				if(s.getMyCards().get(j).getCardType() == CardType.PERSON){
-					if(s.getMyCards().get(j).getCardName().equals(sol.person)){
+				if(s.getCards().get(j).getCardType() == CardType.PERSON){
+					if(s.getCards().get(j).getCardName().equals(sol.person)){
 						if(s.equals(accuser)){
 							return null;
 						}
-						return s.getMyCards().get(j);
+						return s.getCards().get(j);
 					}
 				}
 
-				if(s.getMyCards().get(j).getCardType() == CardType.WEAPON){
-					if(s.getMyCards().get(j).getCardName().equals(sol.weapon)){
+				if(s.getCards().get(j).getCardType() == CardType.WEAPON){
+					if(s.getCards().get(j).getCardName().equals(sol.weapon)){
 						if(s.equals(accuser)){
 							return null;
 						}
-						return s.getMyCards().get(j);
+						return s.getCards().get(j);
 					}
 				}
 
-				if(s.getMyCards().get(j).getCardType() == CardType.ROOM){
-					if(s.getMyCards().get(j).getCardName().equals(sol.room)){
+				if(s.getCards().get(j).getCardType() == CardType.ROOM){
+					if(s.getCards().get(j).getCardName().equals(sol.room)){
 						if(s.equals(accuser)){
 							return null;
 						}
-						return s.getMyCards().get(j);
+						return s.getCards().get(j);
 					}
 				}
 			}
