@@ -51,7 +51,7 @@ public class Board {
 				int left = j - 1;
 				int right = j + 1;
 				int up = i - 1;
-				int downPosition = i + 1;
+				int down = i + 1;
 				
 				if(cell.getInitial() == 'W') {//test if it is a walkway 
 					//check all positions
@@ -64,13 +64,13 @@ public class Board {
 					if(up >= 0 && (grid[up][j].getInitial() == 'W' || grid[up][j].getDoorDirection() == DoorDirection.DOWN)) {
 						temp.add(grid[up][j]);
 					}
-					if(downPosition < numRows && (grid[downPosition][j].getInitial() == 'W' || grid[downPosition][j].getDoorDirection() == DoorDirection.UP)) {
-						temp.add(grid[downPosition][j]);
+					if(down < numRows && (grid[down][j].getInitial() == 'W' || grid[down][j].getDoorDirection() == DoorDirection.UP)) {
+						temp.add(grid[down][j]);
 					}
 				} else if(cell.isDoorway()) {//test if is doorway
 					switch(cell.getDoorDirection()) {
 					case DOWN:
-						temp.add(grid[downPosition][j]);
+						temp.add(grid[down][j]);
 						break;
 					case LEFT:
 						temp.add(grid[i][left]);
