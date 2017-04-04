@@ -50,7 +50,7 @@ public class Board {
 				HashSet <BoardCell> temp = new HashSet<BoardCell>();
 				int left = j - 1;
 				int right = j + 1;
-				int upPosition = i - 1;
+				int up = i - 1;
 				int downPosition = i + 1;
 				
 				if(cell.getInitial() == 'W') {//test if it is a walkway 
@@ -61,8 +61,8 @@ public class Board {
 					if(right < numColumns && (grid[i][right].getInitial() == 'W' || grid[i][right].getDoorDirection() == DoorDirection.LEFT)) {
 						temp.add(grid[i][right]);
 					}
-					if(upPosition >= 0 && (grid[upPosition][j].getInitial() == 'W' || grid[upPosition][j].getDoorDirection() == DoorDirection.DOWN)) {
-						temp.add(grid[upPosition][j]);
+					if(up >= 0 && (grid[up][j].getInitial() == 'W' || grid[up][j].getDoorDirection() == DoorDirection.DOWN)) {
+						temp.add(grid[up][j]);
 					}
 					if(downPosition < numRows && (grid[downPosition][j].getInitial() == 'W' || grid[downPosition][j].getDoorDirection() == DoorDirection.UP)) {
 						temp.add(grid[downPosition][j]);
@@ -79,7 +79,7 @@ public class Board {
 						temp.add(grid[i][right]);
 						break;
 					case UP:
-						temp.add(grid[upPosition][j]);
+						temp.add(grid[up][j]);
 						break;
 					default:
 						break;
