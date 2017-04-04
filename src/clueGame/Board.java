@@ -323,7 +323,7 @@ public class Board {
 				while(cards.get(randomInt).isDealt()){
 					randomInt = randomGen.nextInt(cards.size());
 				}
-					//System.out.println(cards.get(randomInt).toString());
+
 					players[i].getMyCards().add(cards.get(randomInt));
 					cards.get(randomInt).setDealt(true);
 					
@@ -338,10 +338,9 @@ public class Board {
 		
 	}
 	
-	public void selectAnswer() {
-		
-	}
 	
+	//Handle Suggestion iterates through the each player's cards, in order, and returns a card 
+	//within the suggestion
 	public Card handleSuggestion(Solution sol, Player accuser, ArrayList<Player> plrs) {
 		
 		
