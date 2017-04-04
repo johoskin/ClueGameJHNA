@@ -36,16 +36,17 @@ public class ComputerPlayer extends Player {
 		return suggWeapon;
 	}
 
-	private BoardCell lastVisitedOn = new BoardCell();
+	//last visited location
+	private BoardCell lastLocation = new BoardCell();
 	
 	//SUGGESTION FOR CODE
 	
 	public BoardCell getLastVisitedOn() {
-		return lastVisitedOn;
+		return lastLocation;
 	}
 
 	public void setLastVisitedOn(BoardCell lastVisitedOn) {
-		this.lastVisitedOn = lastVisitedOn;
+		this.lastLocation = lastVisitedOn;
 	}
 
 	public ComputerPlayer() {
@@ -66,11 +67,11 @@ public class ComputerPlayer extends Player {
 		
 		
 		for(BoardCell s:targets) {
-			if(s.isRoom() && lastVisitedOn.isRoom()) {
+			if(s.isRoom() && lastLocation.isRoom()) {
 				int randInt = randomGen.nextInt(tempArr.size());
 				loc = tempArr.get(randInt);
 			}
-			else if (s.isRoom() && !lastVisitedOn.isRoom()) {
+			else if (s.isRoom() && !lastLocation.isRoom()) {
 				loc = s;
 				return loc;
 			}
