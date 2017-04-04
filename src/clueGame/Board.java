@@ -49,7 +49,7 @@ public class Board {
 				BoardCell cell = grid[i][j];
 				HashSet <BoardCell> temp = new HashSet<BoardCell>();
 				int left = j - 1;
-				int rightPosition = j + 1;
+				int right = j + 1;
 				int upPosition = i - 1;
 				int downPosition = i + 1;
 				
@@ -58,8 +58,8 @@ public class Board {
 					if(left >= 0 && (grid[i][left].getInitial() == 'W' || grid[i][left].getDoorDirection() == DoorDirection.RIGHT)) {
 						temp.add(grid[i][left]);
 					}
-					if(rightPosition < numColumns && (grid[i][rightPosition].getInitial() == 'W' || grid[i][rightPosition].getDoorDirection() == DoorDirection.LEFT)) {
-						temp.add(grid[i][rightPosition]);
+					if(right < numColumns && (grid[i][right].getInitial() == 'W' || grid[i][right].getDoorDirection() == DoorDirection.LEFT)) {
+						temp.add(grid[i][right]);
 					}
 					if(upPosition >= 0 && (grid[upPosition][j].getInitial() == 'W' || grid[upPosition][j].getDoorDirection() == DoorDirection.DOWN)) {
 						temp.add(grid[upPosition][j]);
@@ -76,7 +76,7 @@ public class Board {
 						temp.add(grid[i][left]);
 						break;
 					case RIGHT:
-						temp.add(grid[i][rightPosition]);
+						temp.add(grid[i][right]);
 						break;
 					case UP:
 						temp.add(grid[upPosition][j]);
