@@ -146,7 +146,6 @@ public class Board {
 	}
 
 	public void setConfigFiles(String boardCon, String roomCon) {
-		// TODO Auto-generated method stub
 		boardConfigFile = boardCon;
 		roomConfigFile = roomCon;
 	}
@@ -194,7 +193,6 @@ public class Board {
 				try {
 					throw new BadConfigFormatException("The number of Columns is not consistent");
 				} catch (BadConfigFormatException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
 			}
@@ -277,17 +275,14 @@ public class Board {
 	}
 	
 	public Map<Character, String> getLegend() {
-		// TODO Auto-generated method stub
 		return legend;
 	}
 
 	public int getNumRows() {
-		// TODO Auto-generated method stub
 		return numRows;
 	}
 
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
 		return numColumns;
 	}
 	
@@ -352,7 +347,7 @@ public class Board {
 		
 		for(Player s : plrs) {
 			for(int j = 0; j < s.getMyCards().size(); j++){
-				
+
 				if(s.getMyCards().get(j).getCardType() == CardType.PERSON){
 					if(s.getMyCards().get(j).getCardName().equals(sol.person)){
 						if(s.equals(accuser)){
@@ -361,7 +356,7 @@ public class Board {
 						return s.getMyCards().get(j);
 					}
 				}
-				
+
 				if(s.getMyCards().get(j).getCardType() == CardType.WEAPON){
 					if(s.getMyCards().get(j).getCardName().equals(sol.weapon)){
 						if(s.equals(accuser)){
@@ -370,7 +365,7 @@ public class Board {
 						return s.getMyCards().get(j);
 					}
 				}
-				
+
 				if(s.getMyCards().get(j).getCardType() == CardType.ROOM){
 					if(s.getMyCards().get(j).getCardName().equals(sol.room)){
 						if(s.equals(accuser)){
@@ -379,10 +374,6 @@ public class Board {
 						return s.getMyCards().get(j);
 					}
 				}
-				
-				
-				
-				
 			}
 		}
 		return null;

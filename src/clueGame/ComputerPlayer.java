@@ -61,11 +61,8 @@ public class ComputerPlayer extends Player {
 		for(BoardCell s: targets){
 			tempArr.add(s);
 		}
-		//System.out.println(tempArr.toString());
-		//System.out.println(tempArr.size());
 		Random randomGen = new Random();
 		BoardCell loc = new BoardCell();
-		//int randInt = randomGen.nextInt(tempArr.size());
 		
 		
 		for(BoardCell s:targets) {
@@ -106,7 +103,7 @@ public class ComputerPlayer extends Player {
 
 	public void createSuggestion(ArrayList<Card> seenCards, ArrayList<Card> unSeenCards, Card roomCard) {
 		Random randomGen = new Random();
-		//System.out.println(unSeenCards.size());
+
 		int randomInt = randomGen.nextInt(unSeenCards.size());
 		if(unSeenCards.size() > 1) {
 			do {

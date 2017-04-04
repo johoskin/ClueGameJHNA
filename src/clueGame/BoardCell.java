@@ -72,12 +72,10 @@ public class BoardCell {
 	}
 
 	public DoorDirection getDoorDirection() {
-		// TODO Auto-generated method stub
 		return this.DD;
 	}
 
 	public char getInitial() {
-		// TODO Auto-generated method stub
 		return this.initial;
 	}
 
