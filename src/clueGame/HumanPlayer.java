@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class HumanPlayer extends Player{
 	
@@ -15,5 +16,6 @@ public class HumanPlayer extends Player{
 	public HumanPlayer() {
 		super();
 	}
+	
 
 }

@@ -11,9 +11,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JPanel;
+
 import java.util.Random;
 
-public class Board {
+public class Board extends JPanel {
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private Map<Character, String> legend;
@@ -252,6 +255,8 @@ public class Board {
 			dealCards();
 		}
 		
+		
+		
 	}
 	
 	public static Color stringToColor(final String value){
@@ -392,5 +397,22 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		for(int i=0; i < numRows; i++) {
+			for(int j = 0; j < numColumns; j++) {
+				grid[i][j].DrawBoardCell(g);
+			}
+		}
+		//repaint();
+		//Draw Players
+		for(Player p: players) {
+			p.drawPlayer(g);
+		}
+		
 	}
 }

@@ -1,5 +1,6 @@
 package clueGame;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,6 +12,9 @@ public class Player {
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	protected ArrayList<Card> seenCards = new ArrayList<Card>();
 	protected ArrayList<Card> unSeenCards = new ArrayList<Card>();
+	
+	static int CELL_WIDTH = 25;
+	static int CELL_HEIGHT = 25;
 	
 	
 	public ArrayList<Card> getUnSeenCards() {
@@ -122,5 +126,15 @@ public class Player {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public void drawPlayer(Graphics g) {
+		if(getColor().equals(Color.YELLOW)) {
+			setColor(new Color(153,153,0));
+		}
+		g.setColor(Color.BLACK);
+		g.drawOval(getColumn()*CELL_HEIGHT, getRow()*CELL_WIDTH, CELL_HEIGHT, CELL_WIDTH);
+		g.setColor(getColor());
+		g.fillOval(getColumn()*CELL_HEIGHT, getRow()*CELL_WIDTH, CELL_HEIGHT, CELL_WIDTH);
 	}
 }
