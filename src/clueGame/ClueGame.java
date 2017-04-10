@@ -18,7 +18,7 @@ public class ClueGame extends JFrame{
 		// Create a JFrame with all the normal functionality
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(600, 600);
+		setSize(570, 605);
 		// Create the JPanel and add it to the JFrame
 		Board board = Board.getInstance();
 		board.setConfigFiles("ASTS_ClueLayout.csv", "ASTS_ClueLegend.txt");
