@@ -13,8 +13,8 @@ public class BoardCell extends JPanel{
 	private boolean name = false;
 	private String roomName;
 	DoorDirection DD;
-	static int CELL_WIDTH = 25;
-	static int CELL_HEIGHT = 25;
+	static int CELL_WIDTH = 27;
+	static int CELL_HEIGHT = 27;
 	
 	public BoardCell() {
 		

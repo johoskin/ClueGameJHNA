@@ -13,8 +13,8 @@ public class Player {
 	protected ArrayList<Card> seenCards = new ArrayList<Card>();
 	protected ArrayList<Card> unSeenCards = new ArrayList<Card>();
 	
-	static int CELL_WIDTH = 25;
-	static int CELL_HEIGHT = 25;
+	static int CELL_WIDTH = 27;
+	static int CELL_HEIGHT = 27;
 	
 	
 	public ArrayList<Card> getUnSeenCards() {

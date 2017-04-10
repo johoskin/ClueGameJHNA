@@ -1,3 +1,27 @@
+commit b01af99bf669e08d52080a96ee74c1c473c80716
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Apr 9 20:24:22 2017 -0600
+
+    Chnaged Frame Size - pair programming
+
+commit 18bf07244438109b729566a500bf36e052e731b7
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Apr 9 20:22:08 2017 -0600
+
+    Finished board GUI - pair programming
+
+commit 0c3106ff7f5ed535deb04fe27c8ebd2e615cab0f
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Apr 6 11:53:37 2017 -0600
+
+    Finished Board GUI together - pair programming
+
+commit 8ec217420912e1ddf1045f12a9a692dba1c70b53
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Mon Apr 3 20:42:32 2017 -0600
+
+    --
+
 commit 59e9b809c67ee734e7a73f8bd8fe9b76eebf11bf
 Author: Joshua Hoskinson <johoskin@mines.edu>
 Date:   Mon Apr 3 20:34:38 2017 -0600
@@ -45,3 +69,141 @@ Author: Joshua Hoskinson <johoskin@mines.edu>
 Date:   Mon Apr 3 20:11:49 2017 -0600
 
     Range-based for-loop for player array in handle suggestion
+
+commit 03ee70e08c2df3a4c3cefcb79b20372ae7f47009
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Mon Mar 20 20:39:18 2017 -0600
+
+    Handle suggestion tests pass, all tests pass
+
+commit 6f2c4dd9ec30635d29af1b30a6ca230f7b605038
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Mon Mar 20 19:34:25 2017 -0600
+
+    Failing handling suggestion tests
+
+commit 117b169030f75c13d48d2f322e3ba76c2a42b24d
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 23:03:11 2017 -0600
+
+    Partly failing tests for handling suggestions
+
+commit 35a59257ea3362e945e8cb4d2e0288714ef0d1e2
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 22:19:36 2017 -0600
+
+    Disprove suggestion passing tests
+
+commit aad834110d11d77b0935f9e72bf66ed0d9f73431
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 22:05:12 2017 -0600
+
+    Disprove Suggestion Computer Player Failing Tests
+
+commit 690877b7d9feaebf1d61702c77792e658b99eaa1
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 21:46:10 2017 -0600
+
+    Fixed check accusation tests - all tests pass
+
+commit 0d3d2809a683ab27e2912bd584943a2a03726230
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 21:29:54 2017 -0600
+
+    Test Create Suggestion passing tests
+
+commit db6d5afa463946abcefe531b2f9e4e2239ebc8de
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 19:56:20 2017 -0600
+
+    Test create suggestion failing tests
+
+commit 436b5bd4b01adc3d8f21feab5825a3e094302d65
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 19:05:43 2017 -0600
+
+    Make accusation - passing tests
+
+commit 873a7a7688623b12d8f3cde1eecfd8a46b2e9a24
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Mar 19 19:01:38 2017 -0600
+
+    Make accusation - failing tests
+
+commit d2614d1b6073f3cd35acbe254e129a2caec9736a
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 16 14:26:36 2017 -0600
+
+    Passing tests for selecting target
+
+commit 4b4f54e3d9553f32e765f816f80dc54040de8f01
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 16 13:14:17 2017 -0600
+
+    Failing select target tests
+
+commit 9b320a65280ab0ccc7d65920d21d08d6ac504983
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 16 11:43:46 2017 -0600
+
+    Test for no player has solution
+
+commit 58bd9841765380f01d267042f9b79d71835af63e
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 16 11:35:55 2017 -0600
+
+    Fix Null Pointer Exception
+
+commit 1bddb58aa60645dfd1ad9cc1dffe97748f9354fb
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 16 11:32:24 2017 -0600
+
+    test solution is dealt
+
+commit 31fba9bec5ec6e2b5e000de377afb02297fe8076
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 23:03:32 2017 -0600
+
+    Deal test pass, all tests pass
+
+commit bc85c73eaaa9faf2e3e2f49f94607b2661178b96
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 21:41:36 2017 -0600
+
+    Failing tests deal cards
+
+commit 0d8c50b3fab300d3ea5c4443b24ceee6da1a6972
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 21:06:02 2017 -0600
+
+    Load cards passing tests
+
+commit d485326bddc6d942ce38ea7569ce705287640402
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 20:58:29 2017 -0600
+
+    Failing load deck tests
+
+commit c9e5860c0662c41e54f113fe4c76d862fd4343d5
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 20:28:58 2017 -0600
+
+    Passing load players tests
+
+commit faa61a5f09fb28397ea9a57c63ccd5bde5987d3d
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Wed Mar 15 19:55:21 2017 -0600
+
+    LoadPlayers failing test
+
+commit 7a2884fc4a714a811d3d02fd8e911781d94a51de
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 9 11:47:41 2017 -0700
+
+    hello
+
+commit 0afbceff35813612be444d4ffb09588279e109f2
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Thu Mar 9 11:40:04 2017 -0700
+
+    first
