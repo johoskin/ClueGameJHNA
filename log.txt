@@ -1,3 +1,9 @@
+commit cf489529c12de7781d05f9253c1418f4c2db2a72
+Author: Joshua Hoskinson <johoskin@mines.edu>
+Date:   Sun Apr 9 21:10:32 2017 -0600
+
+    Splash screen and more - pair programming
+
 commit b01af99bf669e08d52080a96ee74c1c473c80716
 Author: Joshua Hoskinson <johoskin@mines.edu>
 Date:   Sun Apr 9 20:24:22 2017 -0600
