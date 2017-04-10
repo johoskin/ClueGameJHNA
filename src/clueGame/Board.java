@@ -26,6 +26,7 @@ public class Board extends JPanel {
 	private Set<BoardCell> targets; //targets for the player to move to
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
 	private Player[] players = new Player[6];
+	private static ArrayList<String> weapons = new ArrayList<String>();
 	private static ArrayList<Card> cards = new ArrayList<Card>();
 	public Solution solution = new Solution();
 
@@ -247,6 +248,9 @@ public class Board extends JPanel {
 				CardType ret_val;
 				ret_val = CardType.valueOf(str[0]);
 				Card tempCard = new Card(str[1], ret_val);
+				if(tempCard.getCardType().equals(CardType.WEAPON)) {
+					weapons.add(tempCard.getCardName());
+				}
 				cards.add(tempCard);
 				k++;
 			}
@@ -259,6 +263,9 @@ public class Board extends JPanel {
 		
 	}
 	
+	public ArrayList<String> getWeapons() {
+		return weapons;
+	}
 	public static Color stringToColor(final String value){
 		if (value == null){
 			return Color.black;
