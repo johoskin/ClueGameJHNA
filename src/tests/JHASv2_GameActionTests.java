@@ -177,7 +177,7 @@ public class JHASv2_GameActionTests {
 		board.solution.person = "Colonel Mustard";
 		board.solution.weapon = "Pistol";
 		board.solution.room = "Balcony";
-		ComputerPlayer player = new ComputerPlayer("Rob", 6, 4, Color.yellow);
+		ComputerPlayer player = new ComputerPlayer("Rob", 6, 4, Color.yellow, false);
 		ArrayList<Card> testSeen = new ArrayList<Card>();
 		ArrayList<Card> testUnSeen = new ArrayList<Card>();
 		

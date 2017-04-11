@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,16 +19,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class ClueGame extends JFrame{
+public class ClueGame extends JFrame implements MouseListener {
 	
 	private DetectiveNotes dialog;
+	private Board board;
 
 	public ClueGame() {
 		// Create a JFrame with all the normal functionality
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(700, 800);
+		setSize(712, 800);
 		// Create the JPanel and add it to the JFrame
 		Board board = Board.getInstance();
 		board.setConfigFiles("ASTS_ClueLayout.csv", "ASTS_ClueLegend.txt");
@@ -116,10 +120,38 @@ public class ClueGame extends JFrame{
 		return masterPanel;
 	}
 	
+	public void playGame() {
+		//TODO: START GAME
+		System.out.println(rollDie());
+		board.handleTurn(board.getPlayers()[0], rollDie());
+	}
+	
+	public int rollDie() {
+		Random randomGen = new Random();
+		return  (randomGen.nextInt(6)+1);
+	}
+	
 	
 	public static void main(String[] args){
 		ClueGame game = new ClueGame();
 		JOptionPane.showMessageDialog(game,"You are Colonel Mustard, press Next Player to begin play...", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		game.setVisible(true);
+		game.playGame();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 	}
 }

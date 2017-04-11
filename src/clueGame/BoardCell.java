@@ -11,6 +11,16 @@ public class BoardCell extends JPanel{
 	int row,column;
 	char initial;
 	private boolean name = false;
+	private boolean isTarget = false;
+	
+	public boolean isTarget() {
+		return isTarget;
+	}
+
+	public void setTarget(boolean isTarget) {
+		this.isTarget = isTarget;
+	}
+
 	private String roomName;
 	DoorDirection DD;
 	static int CELL_WIDTH = 27;
@@ -102,11 +112,13 @@ public class BoardCell extends JPanel{
 	public void DrawBoardCell(Graphics g) {
 		if(isRoom()) {
 			g.setColor(Color.lightGray);
+			if(isTarget) g.setColor(Color.ORANGE);
 			g.fillRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
 			
 		}
 		else {
 			g.setColor(Color.YELLOW);
+			if(isTarget) g.setColor(Color.ORANGE);
 			g.fillRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH-1, CELL_HEIGHT-1);
 			g.setColor(Color.BLACK);
 			g.drawRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);

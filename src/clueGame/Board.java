@@ -1,6 +1,8 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,11 +14,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.util.Random;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener {
+	//git log | awk '{printf "%s\r\n", $0}' > log.txt
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private Map<Character, String> legend;
@@ -29,15 +33,31 @@ public class Board extends JPanel {
 	private static ArrayList<String> weapons = new ArrayList<String>();
 	private static ArrayList<Card> cards = new ArrayList<Card>();
 	public Solution solution = new Solution();
+	private BoardCell targetCell;
 
 	// variable used for singleton pattern
-		private static Board theInstance = new Board();
-		// ctor is private to ensure only one can be created
-		private Board() {}
-		// this method returns the only Board
-		public static Board getInstance() {
-			return theInstance;
+	private static Board theInstance = new Board();
+	// ctor is private to ensure only one can be created
+	private Board() {}
+	// this method returns the only Board
+	public static Board getInstance() {
+		return theInstance;
+	}
+	
+	public void handleTurn(Player p, int roll) {
+		calcTargets(p.getRow(), p.getColumn(), roll);
+		
+		if(p.isHuman()) {
+			for(BoardCell c: targets) {
+				c.setTarget(true);
+			}
+			p.makeMove(targets);
+			
 		}
+		else {
+			p.makeMove(targets);
+		}
+	}
 	
 	public Player[] getPlayers() {
 			return players;
@@ -233,9 +253,11 @@ public class Board extends JPanel {
 				Integer row = new Integer(Integer.parseInt(str[2]));
 				Integer col = new Integer(Integer.parseInt(str[3]));
 				Color color = stringToColor(str[1]);
-				players[j] = new Player(str[0], row, col, color);
+				if(j==0) players[j] = new HumanPlayer(str[0],row,col,color, true);
+				else players[j] = new ComputerPlayer(str[0], row, col, color, false);
 				j++;
 			}
+			
 		}
 		
 		int k = 0;
@@ -415,11 +437,44 @@ public class Board extends JPanel {
 				grid[i][j].DrawBoardCell(g);
 			}
 		}
-		//repaint();
+		repaint();
+		//
 		//Draw Players
 		for(Player p: players) {
 			p.drawPlayer(g);
 		}
 		
+		repaint();
+		
 	}
+	
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		BoardCell cell = new BoardCell();
+		for(int i= 0; i < numRows; i++) {
+			for(int j = 0; j < numColumns; j++) {
+				if(grid[i][j].contains(e.getX(),e.getY())){
+					cell = grid[i][j];
+					if(!cell.isTarget()) JOptionPane.showMessageDialog(null, "Not a valid target");
+					else targetCell = cell;
+					break;
+				}
+			}
+		}
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
 }

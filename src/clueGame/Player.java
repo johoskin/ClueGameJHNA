@@ -3,18 +3,32 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 public class Player {
 	private String playerName;
 	private int row;
 	private int column;
 	private Color color;
+	private boolean isHuman = false;
+	private boolean isTurn = false;
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
+	
+	public boolean isTurn() {
+		return isTurn;
+	}
+
+	public void setTurn(boolean isTurn) {
+		this.isTurn = isTurn;
+	}
+
 	protected ArrayList<Card> seenCards = new ArrayList<Card>();
 	protected ArrayList<Card> unSeenCards = new ArrayList<Card>();
 	
 	static int CELL_WIDTH = 27;
 	static int CELL_HEIGHT = 27;
+	
+
 	
 	
 	public ArrayList<Card> getUnSeenCards() {
@@ -37,13 +51,18 @@ public class Player {
 		
 	}
 	
-	public Player(String playerName, int row, int column, Color color){
+	public Player(String playerName, int row, int column, Color color, boolean isHuman){
 		this.playerName = playerName;
 		this.row = row;
 		this.column = column;
 		this.color = color;
+		this.isHuman = isHuman;
 	}
 	
+	public boolean isHuman() {
+		return isHuman;
+	}
+
 	public ArrayList<Card> getCards() {
 		return myCards;
 	}
@@ -136,5 +155,9 @@ public class Player {
 		g.drawOval(getColumn()*CELL_HEIGHT, getRow()*CELL_WIDTH, CELL_HEIGHT, CELL_WIDTH);
 		g.setColor(getColor());
 		g.fillOval(getColumn()*CELL_HEIGHT, getRow()*CELL_WIDTH, CELL_HEIGHT, CELL_WIDTH);
+	}
+
+	public void makeMove(Set<BoardCell> targets) {
+		
 	}
 }

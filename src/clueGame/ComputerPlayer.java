@@ -11,6 +11,7 @@ public class ComputerPlayer extends Player {
 	private String suggPerson;
 	private String suggRoom;
 	private String suggWeapon;
+
 	public Solution mySolution = new Solution();
 	
 	public Solution getMySolution() {
@@ -54,8 +55,8 @@ public class ComputerPlayer extends Player {
 		super();
 	}
 	
-	public ComputerPlayer(String playerName, int row, int column, Color color) {
-		super(playerName, row, column, color);
+	public ComputerPlayer(String playerName, int row, int column, Color color, Boolean isHuman) {
+		super(playerName, row, column, color, isHuman);
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -134,5 +135,11 @@ public class ComputerPlayer extends Player {
 
 	}
 	
+	@Override
+	public void makeMove(Set<BoardCell> targets) {
+		BoardCell cell = pickLocation(targets);
+		setRow(cell.getRow());
+		setColumn(cell.getColumn());
+	}
 
 }
