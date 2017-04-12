@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -17,6 +18,8 @@ import javax.swing.border.TitledBorder;
 
 public class ControlGUI extends JPanel{
 	private JTextField turn, roll, guess, response;
+	private Board controlBoard;
+	private int numRoll;
 	
 	public void setTurn(String s) {
 		turn.setText(s);
@@ -34,7 +37,8 @@ public class ControlGUI extends JPanel{
 		response.setText(s);
 	}
 
-	public ControlGUI() {
+	public ControlGUI(Board board) {
+		controlBoard = board;
 		setLayout(new GridLayout(2,1));
 		JPanel panel = createTurnPanel();
 		add(panel);
@@ -66,6 +70,7 @@ public class ControlGUI extends JPanel{
 		JPanel buttPanel = new JPanel();
 		buttPanel.setLayout(new GridLayout(1,2));
 		JButton nextPlayer = new JButton("Next player");
+		nextPlayer.addActionListener(new TurnListener());
 		JButton accusationButton = new JButton("Make an accusation");
 		
 		buttPanel.add(nextPlayer);
@@ -114,21 +119,24 @@ public class ControlGUI extends JPanel{
 		
 	}  
 	
-	private JPanel createButtonPanel() {
-		JPanel panel = new JPanel();
-		JButton nextPlayer = new JButton("Next player");
-		JButton accusationButton = new JButton("Make an accusation");
-		panel.add(nextPlayer);
-		panel.add(accusationButton);
-		nextPlayer.addActionListener(new TurnListener());
-		return panel;
-	}
 	
 	class TurnListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			
+		public void actionPerformed(ActionEvent arg0) {
+			//add to text field
+			//System.out.println("player" + controlBoard.getPlayers()[controlBoard.getPlayerIndex()]);
+			setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
+			numRoll = controlBoard.rollDie();
+			setRoll(String.valueOf(numRoll));
+			controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
+			controlBoard.nextPlayer();
+			/*if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver()) {
+				controlBoard.setTurnOver(false);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "You need to finish your turn");
+			}*/
 		}
 		
 	}
@@ -136,11 +144,16 @@ public class ControlGUI extends JPanel{
 	public static void main(String[] args){
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
+		Board controlBoard = Board.getInstance();
+		controlBoard.setConfigFiles("ASTS_ClueLayout.csv", "ASTS_ClueLegend.txt");
+		controlBoard.setPlayerConfig("JHASv2_CluePlayer.txt");
+		controlBoard.setCardConfig("JHASv2_ClueCards.txt");
+		controlBoard.initialize();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue GUI Control");
 		frame.setSize(700, 180);	
 		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI();
+		ControlGUI gui = new ControlGUI(controlBoard);
 		frame.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		frame.setVisible(true);

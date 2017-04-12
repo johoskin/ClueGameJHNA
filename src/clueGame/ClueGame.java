@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class ClueGame extends JFrame implements MouseListener {
+public class ClueGame extends JFrame {
 	
 	private DetectiveNotes dialog;
 	private Board board;
@@ -44,7 +44,7 @@ public class ClueGame extends JFrame implements MouseListener {
 		add(board, BorderLayout.CENTER);
 		JPanel cards = myCards(board.getPlayers()[0].getCards());
 		add(cards, BorderLayout.EAST);
-		JPanel control = new ControlGUI();
+		JPanel control = new ControlGUI(board);
 		add(control, BorderLayout.SOUTH);
 		
 		// Now let's view it
@@ -122,13 +122,8 @@ public class ClueGame extends JFrame implements MouseListener {
 	
 	public void playGame() {
 		//TODO: START GAME
-		System.out.println(rollDie());
-		board.handleTurn(board.getPlayers()[0], rollDie());
-	}
-	
-	public int rollDie() {
-		Random randomGen = new Random();
-		return  (randomGen.nextInt(6)+1);
+		//System.out.println(rollDie());
+		//board.handleTurn(board.getPlayers()[0], rollDie());
 	}
 	
 	
@@ -136,22 +131,7 @@ public class ClueGame extends JFrame implements MouseListener {
 		ClueGame game = new ClueGame();
 		JOptionPane.showMessageDialog(game,"You are Colonel Mustard, press Next Player to begin play...", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		game.setVisible(true);
-		game.playGame();
+		//game.playGame();
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-	}
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-	}
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-	}
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-	}
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-	}
 }

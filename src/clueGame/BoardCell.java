@@ -112,13 +112,13 @@ public class BoardCell extends JPanel{
 	public void DrawBoardCell(Graphics g) {
 		if(isRoom()) {
 			g.setColor(Color.lightGray);
-			if(isTarget) g.setColor(Color.ORANGE);
+			if(isTarget) g.setColor(Color.MAGENTA);
 			g.fillRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
 			
 		}
 		else {
 			g.setColor(Color.YELLOW);
-			if(isTarget) g.setColor(Color.ORANGE);
+			if(isTarget) g.setColor(Color.MAGENTA);
 			g.fillRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH-1, CELL_HEIGHT-1);
 			g.setColor(Color.BLACK);
 			g.drawRect(column*CELL_HEIGHT, row*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);

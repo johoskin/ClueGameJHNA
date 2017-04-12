@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -11,6 +12,10 @@ public class ComputerPlayer extends Player {
 	private String suggPerson;
 	private String suggRoom;
 	private String suggWeapon;
+	private Set<BoardCell> visitedSpots = new HashSet<BoardCell>();
+
+	//last visited location
+	private BoardCell lastLocation = new BoardCell();
 
 	public Solution mySolution = new Solution();
 	
@@ -38,8 +43,6 @@ public class ComputerPlayer extends Player {
 		return suggWeapon;
 	}
 
-	//last visited location
-	private BoardCell lastLocation = new BoardCell();
 	
 	//SUGGESTION FOR CODE
 	
@@ -75,6 +78,7 @@ public class ComputerPlayer extends Player {
 			}
 			else if (s.isRoom() && !lastLocation.isRoom()) {
 				loc = s;
+				setLastVisitedOn(loc);
 				return loc;
 			}
 			else {
@@ -82,7 +86,7 @@ public class ComputerPlayer extends Player {
 				loc = tempArr.get(randInt);
 			}
 		}
-		
+		setLastVisitedOn(loc);
 		return loc;
 	}
 	

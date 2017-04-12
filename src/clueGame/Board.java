@@ -19,22 +19,30 @@ import javax.swing.JPanel;
 
 import java.util.Random;
 
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel {
 	//git log | awk '{printf "%s\r\n", $0}' > log.txt
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
+	public final int MAX_PLAYERS = 6;
 	private Map<Character, String> legend;
 	private String boardConfigFile, roomConfigFile, playerConfigFile, cardConfigFile;
 	private Map<BoardCell, Set<BoardCell>> adjMtx; //adjacency matrix
 	private Set<BoardCell> visited; //visited cells
 	private Set<BoardCell> targets; //targets for the player to move to
 	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE]; //playing board
-	private Player[] players = new Player[6];
+	private Player[] players = new Player[MAX_PLAYERS];
 	private static ArrayList<String> weapons = new ArrayList<String>();
 	private static ArrayList<Card> cards = new ArrayList<Card>();
 	public Solution solution = new Solution();
 	private BoardCell targetCell;
+	private int playerIndex = 0;
+	private boolean isTurnOver = false;
 
+
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
@@ -45,18 +53,42 @@ public class Board extends JPanel implements MouseListener {
 	}
 	
 	public void handleTurn(Player p, int roll) {
-		calcTargets(p.getRow(), p.getColumn(), roll);
 		
+		calcTargets(p.getRow(), p.getColumn(), roll);
+		System.out.println(targets.toString());
 		if(p.isHuman()) {
+			//isTurnOver = false;
 			for(BoardCell c: targets) {
 				c.setTarget(true);
+				
 			}
-			p.makeMove(targets);
+			repaint();
 			
 		}
 		else {
 			p.makeMove(targets);
+			//targets.clear();
 		}
+	}
+	
+	public int rollDie() {
+		Random randomGen = new Random();
+		int roll = (randomGen.nextInt(6)+1);
+		return roll;
+	}
+	
+	
+	public void nextPlayer() {
+		playerIndex++;
+		playerIndex%=(MAX_PLAYERS);
+	}
+	
+	public void setTurnOver(boolean isTurnOver) {
+		this.isTurnOver = isTurnOver;
+	}
+
+	public boolean isTurnOver() {
+		return isTurnOver;
 	}
 	
 	public Player[] getPlayers() {
@@ -114,7 +146,8 @@ public class Board extends JPanel implements MouseListener {
 		}
 	}
 	
-	public void calcTargets(int r, int c, int pathLength) {
+	/*public void calcTargets(int r, int c, int pathLength) {
+		targets.clear();
 		visited.add(grid[r][c]);
 		HashSet<BoardCell> adj = new HashSet<BoardCell>(getAdjList(r, c));
 		for(BoardCell cell:adj) {
@@ -150,6 +183,37 @@ public class Board extends JPanel implements MouseListener {
 				visited.remove(cell);
 			}
 		}
+	}*/
+	
+	public void calcTargets(int row, int col, int pathLength){
+		visited.clear();
+		targets.clear();
+		
+		visited.add(grid[row][col]);
+		findAllTargets(grid[row][col], pathLength);
+	}
+	
+	public void findAllTargets(BoardCell startCell, int pathLength) {
+		Set<BoardCell> tempSet = new HashSet<BoardCell>();
+		tempSet = adjMtx.get(startCell);
+		for(BoardCell s: tempSet) {
+			if(s.isDoorway() && !visited.contains(s)){
+				targets.add(s);
+			}
+			if (visited.contains(s)) {
+				continue;
+			}
+			else {
+				visited.add(s);
+				if(pathLength == 1) targets.add(s);
+				else {
+					findAllTargets(s,pathLength-1);
+				}
+				visited.remove(s);
+			}
+			s.toString();
+		}
+		
 	}
 	
 	public BoardCell getCellAt(int r, int c) {
@@ -183,6 +247,7 @@ public class Board extends JPanel implements MouseListener {
 	}
 
 	public void initialize() {
+		addMouseListener(new ChooseListener());
 		FileReader roomin, boardin, playerin, cardin;
 		Scanner Roomin1 = null, Boardin1 = null, Playerin1 = null, Cardin1 = null;
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
@@ -448,33 +513,48 @@ public class Board extends JPanel implements MouseListener {
 		
 	}
 	
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		BoardCell cell = new BoardCell();
-		for(int i= 0; i < numRows; i++) {
-			for(int j = 0; j < numColumns; j++) {
-				if(grid[i][j].contains(e.getX(),e.getY())){
-					cell = grid[i][j];
-					if(!cell.isTarget()) JOptionPane.showMessageDialog(null, "Not a valid target");
-					else targetCell = cell;
-					break;
+	public class ChooseListener implements MouseListener {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			BoardCell cell = new BoardCell(e.getY()/27,e.getX()/27);
+			for(int i= 0; i < numRows; i++) {
+				for(int j = 0; j < numColumns; j++) {
+					//if (isTurnOver == true) break;
+					if(grid[i][j].getRow() == (e.getY()/27) && grid[i][j].getColumn() == (e.getX()/27)){
+						cell = grid[i][j];
+						if(!cell.isTarget()) JOptionPane.showMessageDialog(null, "Not a valid target");
+						else {
+							for(BoardCell c: targets) {
+								c.setTarget(false);
+							}
+							targets.clear();
+							targets.add(cell);
+							getPlayers()[0].makeMove(targets);
+							//isTurnOver = true;
+							
+							targets.clear();
+							repaint();
+							break;
+						}
+						
+					}
 				}
 			}
+
 		}
-		
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	
 	}
 
 }
