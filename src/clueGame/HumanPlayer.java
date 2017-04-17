@@ -11,7 +11,6 @@ public class HumanPlayer extends Player{
 	private String suggRoom;
 	private String suggWeapon;
 
-
 	public HumanPlayer(String playerName, int row, int column, Color color, boolean isHuman) {
 		super(playerName, row, column, color, isHuman);
 	}

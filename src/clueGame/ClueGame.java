@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class ClueGame extends JFrame {
+public class ClueGame extends JFrame implements MouseListener{
 	
 	private DetectiveNotes dialog;
 	private Board board;
@@ -132,6 +132,46 @@ public class ClueGame extends JFrame {
 		JOptionPane.showMessageDialog(game,"You are Colonel Mustard, press Next Player to begin play...", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		game.setVisible(true);
 		//game.playGame();
+	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -124,18 +124,53 @@ public class ControlGUI extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//add to text field
-			//System.out.println("player" + controlBoard.getPlayers()[controlBoard.getPlayerIndex()]);
-			setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
+			System.out.println(controlBoard.getPlayerIndex());
+			System.out.println(controlBoard.getTurnOver());
+			
+			
+			/*setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
 			numRoll = controlBoard.rollDie();
 			setRoll(String.valueOf(numRoll));
 			controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-			controlBoard.nextPlayer();
-			/*if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver()) {
-				controlBoard.setTurnOver(false);
+			controlBoard.nextPlayer();*/
+			
+			if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman()) {
+				if(controlBoard.isTurnOver() == false) {
+					JOptionPane.showMessageDialog(null, "You need to finish your turn");
+					return;
+				}
+				else {
+					setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
+					numRoll = controlBoard.rollDie();
+					setRoll(String.valueOf(numRoll));
+					controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
+					controlBoard.nextPlayer();
+					
+				}
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "You need to finish your turn");
+				setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
+				numRoll = controlBoard.rollDie();
+				setRoll(String.valueOf(numRoll));
+				controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
+				controlBoard.nextPlayer();
+				
+			}
+			
+			/*if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver() == false) {
+				
+			}
+			else {
+
+				setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
+				numRoll = controlBoard.rollDie();
+				setRoll(String.valueOf(numRoll));
+
+				controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
+
+				//if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver() == true){
+				controlBoard.nextPlayer();
+				//}
 			}*/
 		}
 		

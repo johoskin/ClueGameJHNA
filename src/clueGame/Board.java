@@ -35,8 +35,24 @@ public class Board extends JPanel {
 	private static ArrayList<Card> cards = new ArrayList<Card>();
 	public Solution solution = new Solution();
 	private BoardCell targetCell;
-	private int playerIndex = 0;
-	private boolean isTurnOver = false;
+	private int playerIndex = -1;
+	private boolean isTurnOver = true;
+
+
+	public boolean isTurnOver() {
+		return isTurnOver;
+	}
+
+	public void setTurnOver(boolean isTurnOver) {
+		this.isTurnOver = isTurnOver;
+	}
+	
+	//////////////////////
+	public boolean getTurnOver() {
+		return isTurnOver;
+	}
+
+	
 
 
 	public int getPlayerIndex() {
@@ -55,19 +71,16 @@ public class Board extends JPanel {
 	public void handleTurn(Player p, int roll) {
 		
 		calcTargets(p.getRow(), p.getColumn(), roll);
-		System.out.println(targets.toString());
+		
 		if(p.isHuman()) {
-			//isTurnOver = false;
+			isTurnOver = false;
 			for(BoardCell c: targets) {
 				c.setTarget(true);
-				
 			}
 			repaint();
-			
 		}
-		else {
+		else if (!p.isHuman() && isTurnOver == true){
 			p.makeMove(targets);
-			//targets.clear();
 		}
 	}
 	
@@ -79,16 +92,8 @@ public class Board extends JPanel {
 	
 	
 	public void nextPlayer() {
-		playerIndex++;
-		playerIndex%=(MAX_PLAYERS);
-	}
-	
-	public void setTurnOver(boolean isTurnOver) {
-		this.isTurnOver = isTurnOver;
-	}
-
-	public boolean isTurnOver() {
-		return isTurnOver;
+		playerIndex = playerIndex + 1;
+		playerIndex = playerIndex%=(MAX_PLAYERS);
 	}
 	
 	public Player[] getPlayers() {
@@ -146,44 +151,6 @@ public class Board extends JPanel {
 		}
 	}
 	
-	/*public void calcTargets(int r, int c, int pathLength) {
-		targets.clear();
-		visited.add(grid[r][c]);
-		HashSet<BoardCell> adj = new HashSet<BoardCell>(getAdjList(r, c));
-		for(BoardCell cell:adj) {
-			if(!visited.contains(cell)) {
-				visited.add(cell);
-				if(cell.isDoorway()) {
-					switch(cell.getDoorDirection()) {
-					case DOWN:
-						if(visited.contains(grid[cell.getRow()+1][cell.getColumn()]))
-							targets.add(cell);
-						break;
-					case LEFT:
-						if(visited.contains(grid[cell.getRow()][cell.getColumn()-1]))
-							targets.add(cell);
-						break;
-					case RIGHT:
-						if(visited.contains(grid[cell.getRow()][cell.getColumn()+1]))
-							targets.add(cell);
-						break;
-					case UP:
-						if(visited.contains(grid[cell.getRow()-1][cell.getColumn()]))
-							targets.add(cell);
-						break;
-					default:
-						break;
-					}
-				}
-				if(pathLength == 1) {
-					targets.add(cell);
-				} else {
-					calcTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
-				}
-				visited.remove(cell);
-			}
-		}
-	}*/
 	
 	public void calcTargets(int row, int col, int pathLength){
 		visited.clear();
@@ -516,13 +483,21 @@ public class Board extends JPanel {
 	public class ChooseListener implements MouseListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			//if(e.getSource() == )
 			BoardCell cell = new BoardCell(e.getY()/27,e.getX()/27);
 			for(int i= 0; i < numRows; i++) {
 				for(int j = 0; j < numColumns; j++) {
-					//if (isTurnOver == true) break;
-					if(grid[i][j].getRow() == (e.getY()/27) && grid[i][j].getColumn() == (e.getX()/27)){
+					
+					//if (playerIndex != 0){
+					//	JOptionPane.showMessageDialog(null, "Not your turn!");
+					//	return;
+					//}
+					if(grid[i][j].getRow() == (e.getY()/27) && grid[i][j].getColumn() == (e.getX()/27) && isTurnOver == false){
 						cell = grid[i][j];
-						if(!cell.isTarget()) JOptionPane.showMessageDialog(null, "Not a valid target");
+						if(!cell.isTarget()) {
+							JOptionPane.showMessageDialog(null, "Not a valid target");
+							return;
+						}
 						else {
 							for(BoardCell c: targets) {
 								c.setTarget(false);
@@ -530,17 +505,17 @@ public class Board extends JPanel {
 							targets.clear();
 							targets.add(cell);
 							getPlayers()[0].makeMove(targets);
-							//isTurnOver = true;
+							
 							
 							targets.clear();
 							repaint();
+							isTurnOver = true;
 							break;
 						}
 						
 					}
 				}
 			}
-
 		}
 		@Override
 		public void mouseEntered(MouseEvent e) {
@@ -550,6 +525,7 @@ public class Board extends JPanel {
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {
+			
 		}
 		@Override
 		public void mouseReleased(MouseEvent e) {
