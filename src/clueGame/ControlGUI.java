@@ -128,11 +128,6 @@ public class ControlGUI extends JPanel{
 			System.out.println(controlBoard.getTurnOver());
 			
 			
-			/*setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
-			numRoll = controlBoard.rollDie();
-			setRoll(String.valueOf(numRoll));
-			controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-			controlBoard.nextPlayer();*/
 			
 			if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman()) {
 				if(controlBoard.isTurnOver() == false) {
@@ -144,8 +139,7 @@ public class ControlGUI extends JPanel{
 					numRoll = controlBoard.rollDie();
 					setRoll(String.valueOf(numRoll));
 					controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-					controlBoard.nextPlayer();
-					
+					System.out.println(controlBoard.isTurnOver());
 				}
 			}
 			else {
@@ -156,22 +150,7 @@ public class ControlGUI extends JPanel{
 				controlBoard.nextPlayer();
 				
 			}
-			
-			/*if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver() == false) {
-				
-			}
-			else {
 
-				setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
-				numRoll = controlBoard.rollDie();
-				setRoll(String.valueOf(numRoll));
-
-				controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-
-				//if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman() && controlBoard.isTurnOver() == true){
-				controlBoard.nextPlayer();
-				//}
-			}*/
 		}
 		
 	}

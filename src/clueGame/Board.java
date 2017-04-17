@@ -35,7 +35,7 @@ public class Board extends JPanel {
 	private static ArrayList<Card> cards = new ArrayList<Card>();
 	public Solution solution = new Solution();
 	private BoardCell targetCell;
-	private int playerIndex = -1;
+	private int playerIndex = 0;
 	private boolean isTurnOver = true;
 
 
@@ -504,12 +504,14 @@ public class Board extends JPanel {
 							}
 							targets.clear();
 							targets.add(cell);
+							
 							getPlayers()[0].makeMove(targets);
 							
 							
 							targets.clear();
 							repaint();
 							isTurnOver = true;
+							nextPlayer();
 							break;
 						}
 						
