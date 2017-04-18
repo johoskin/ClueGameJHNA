@@ -21,6 +21,15 @@ public class ControlGUI extends JPanel{
 	private Board board;
 	private int numRoll;
 	
+	// variable used for singleton pattern
+	private static ControlGUI theInstance = new ControlGUI();
+	// ctor is private to ensure only one can be created
+	private ControlGUI() {}
+	// this method returns the only Board
+	public static ControlGUI getInstance() {
+		return theInstance;
+	}
+	
 	public void setTurn(String s) {
 		turn.setText(s);
 	}
@@ -37,7 +46,7 @@ public class ControlGUI extends JPanel{
 		response.setText(s);
 	}
 
-	public ControlGUI() {
+	public void initialize() {
 		board = board.getInstance();
 		setLayout(new GridLayout(2,1));
 		JPanel panel = createTurnPanel();
@@ -172,7 +181,7 @@ public class ControlGUI extends JPanel{
 					GuessGUI guess = new GuessGUI(false, board.getPlayers()[0]);
 					guess.setVisible(true);
 					setGuess(board.getPlayers()[0].getSuggPerson() + " in the " + board.getPlayers()[0].getSuggRoom() + " with the " + board.getPlayers()[0].getSuggWeapon());
-					if(!board.getSuggCard().equals(null)) {
+					if(board.getSuggCard() !=null) {
 						setResponse(board.getSuggCard().getCardName());
 					}
 				}

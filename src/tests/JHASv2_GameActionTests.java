@@ -416,9 +416,14 @@ public class JHASv2_GameActionTests {
 		
 		//no players can disprove
 		Card tempCard = new Card();
+		for (int i = 0; i < p1.getCards().size(); i++){
+			System.out.println(p1.getCards().get(i).getCardName());
+		}
+
+		
 		tempCard = board.handleSuggestion(sol, p1, tempPlayers);
 		//System.out.println(tempCard.getCardName());
-		assertEquals(tempCard, (null));
+		assertEquals(tempCard, null);
 		
 		//only accusing player can disprove
 		tempPlayers[0].getCards().add((board.getCards().get(0)));
@@ -437,17 +442,17 @@ public class JHASv2_GameActionTests {
 		//two players can disprove, correct player (next in list) returns answer
 		tempPlayers[0].getCards().remove(board.getCards().get(0));
 		for(int i = 0 ; i < tempPlayers[0].getCards().size(); i++) {
-				System.out.println("player 1 " + i + " " + tempPlayers[0].getCards().get(i).getCardName());
+				//System.out.println("player 1 " + i + " " + tempPlayers[0].getCards().get(i).getCardName());
 		}
 		tempPlayers[1].getCards().add((board.getCards().get(14)));
 		tempPlayers[2].getCards().add((board.getCards().get(10)));
 		
 		for(int i = 0 ; i < tempPlayers[1].getCards().size(); i++) {
-			System.out.println("player 2 " + i + " " + tempPlayers[1].getCards().get(i).getCardName());
+			//System.out.println("player 2 " + i + " " + tempPlayers[1].getCards().get(i).getCardName());
 		}
 		
 		for(int i = 0 ; i < tempPlayers[2].getCards().size(); i++) {
-			System.out.println("player 3 " + i + " " + tempPlayers[2].getCards().get(i).getCardName());
+			//System.out.println("player 3 " + i + " " + tempPlayers[2].getCards().get(i).getCardName());
 		}
 		
 		

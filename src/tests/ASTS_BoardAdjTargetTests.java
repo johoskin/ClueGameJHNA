@@ -5,6 +5,8 @@ import java.util.Set;
 //Doing a static import allows me to write assertEquals rather than
 //assertEquals
 import static org.junit.Assert.*;
+import org.junit.*;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 

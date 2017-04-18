@@ -44,7 +44,8 @@ public class ClueGame extends JFrame implements MouseListener{
 		add(board, BorderLayout.CENTER);
 		JPanel cards = myCards(board.getPlayers()[0].getCards());
 		add(cards, BorderLayout.EAST);
-		JPanel control = new ControlGUI();
+		ControlGUI control = ControlGUI.getInstance();
+		control.initialize();
 		add(control, BorderLayout.SOUTH);
 		
 		// Now let's view it

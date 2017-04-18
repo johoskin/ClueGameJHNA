@@ -34,6 +34,7 @@ public class GuessGUI extends JDialog {
 	private Board board;
 	private boolean inRoom = false;
 	private boolean submitted = false;
+	private ControlGUI control;
 	
 	public boolean isSubmitted() {
 		return submitted;
@@ -44,6 +45,9 @@ public class GuessGUI extends JDialog {
 		setTitle("Make a Guess");
 		//setSize(700, 180);
 		board = Board.getInstance();
+		control = ControlGUI.getInstance();
+		
+		
 		setSize(300,300);
 		setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		setLayout(new GridLayout(4,1));
@@ -190,6 +194,12 @@ public class GuessGUI extends JDialog {
 					board.getPlayers()[0].setSuggPerson((String)personCombo.getSelectedItem());
 					board.getPlayers()[0].setSuggWeapon((String)weaponCombo.getSelectedItem());
 					board.setSuggCard(board.handleSuggestion(board.getPlayers()[0].getMySolution(), board.getPlayers()[0], board.getPlayers()));
+					if(board.getSuggCard() != null) {
+						control.setResponse(board.getSuggCard().getCardName());
+					}
+					if(!(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() == null && board.getPlayers()[board.getPlayerIndex()].getSuggRoom() == null && board.getPlayers()[board.getPlayerIndex()].getSuggWeapon() == null)) {
+						control.setGuess(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() + " in the " + board.getPlayers()[board.getPlayerIndex()].getSuggRoom() + " with the " + board.getPlayers()[board.getPlayerIndex()].getSuggWeapon());
+					}
 					board.getTargets().clear();
 					board.repaint();
 					board.nextPlayer();
@@ -207,7 +217,6 @@ public class GuessGUI extends JDialog {
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "No, sorry!");
-						
 						board.getTargets().clear();
 						board.repaint();
 						board.nextPlayer();
