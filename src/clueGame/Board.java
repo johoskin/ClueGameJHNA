@@ -37,7 +37,16 @@ public class Board extends JPanel {
 	private BoardCell targetCell;
 	private int playerIndex = 0;
 	private boolean isTurnOver = true;
+	private Card suggCard;
 
+
+	public void setSuggCard(Card suggCard) {
+		this.suggCard = suggCard;
+	}
+
+	public Card getSuggCard() {
+		return suggCard;
+	}
 
 	public boolean isTurnOver() {
 		return isTurnOver;
@@ -52,7 +61,9 @@ public class Board extends JPanel {
 		return isTurnOver;
 	}
 
-	
+	public BoardCell getCurrentLocation(int r, int c){
+		return grid[r][c];
+	}
 
 
 	public int getPlayerIndex() {
@@ -81,6 +92,11 @@ public class Board extends JPanel {
 		}
 		else if (!p.isHuman() && isTurnOver == true){
 			p.makeMove(targets);
+			suggCard = handleSuggestion(p.getMySolution(), players[playerIndex], players);
+			p.seenCards.add(suggCard);
+			if(suggCard == null) {
+				p.compReturn();
+			}
 		}
 	}
 	
@@ -391,6 +407,7 @@ public class Board extends JPanel {
 				}
 
 					players[i].getCards().add(cards.get(randomInt));
+					players[i].getSeenCards().add(cards.get(randomInt));
 					cards.get(randomInt).setDealt(true);
 					
 				if(isDeckOpen() == false){
@@ -401,13 +418,20 @@ public class Board extends JPanel {
 			
 		} while (isDeckOpen());
 		
+		for(Player p: players) {
+			for(Card c: cards) {
+				if(!p.getSeenCards().contains(c)) {
+					p.getUnSeenCards().add(c);
+				}
+			}
+		}
 		
 	}
 	
 	
 	//Handle Suggestion iterates through the each player's cards, in order, and returns a card 
 	//within the suggestion
-	public Card handleSuggestion(Solution sol, Player accuser, ArrayList<Player> plrs) {
+	public Card handleSuggestion(Solution sol, Player accuser, Player[] plrs) {
 		
 		
 		for(Player s : plrs) {
@@ -510,6 +534,18 @@ public class Board extends JPanel {
 							
 							targets.clear();
 							repaint();
+							
+							if(getCurrentLocation(players[0].getRow(), players[0].getColumn()).isRoom()) {
+								GuessGUI guess = new GuessGUI(true, players[0]);
+								guess.setVisible(true);
+/*								if (checkAccusation(players[0].getMySolution())) {
+									JOptionPane.showMessageDialog(null, "Congrats, you have won the game!");
+									System.exit(0);
+									return;
+								}
+								setSuggCard(handleSuggestion(players[0].getMySolution(), players[0], players));*/
+							}
+							
 							isTurnOver = true;
 							nextPlayer();
 							break;

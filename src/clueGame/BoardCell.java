@@ -22,6 +22,11 @@ public class BoardCell extends JPanel{
 	}
 
 	private String roomName;
+	
+	public String getRoomName() {
+		return roomName;
+	}
+
 	DoorDirection DD;
 	static int CELL_WIDTH = 27;
 	static int CELL_HEIGHT = 27;

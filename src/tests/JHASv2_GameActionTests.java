@@ -376,11 +376,11 @@ public class JHASv2_GameActionTests {
 		HumanPlayer p1 = new HumanPlayer();
 		ComputerPlayer p2 = new ComputerPlayer();
 		ComputerPlayer p3 = new ComputerPlayer();
-		ArrayList<Player> tempPlayers = new ArrayList<Player>();
+		Player[] tempPlayers = new Player[6];
 		
-		tempPlayers.add(p1);
-		tempPlayers.add(p2);
-		tempPlayers.add(p3);
+		tempPlayers[0] =p1;
+		tempPlayers[1] = p2;
+		tempPlayers[2] = p3;
 		
 		
 		ArrayList<Card> hand1 = new ArrayList<Card>();
@@ -396,7 +396,7 @@ public class JHASv2_GameActionTests {
 		hand1.add(board.getCards().get(1));
 		hand1.add(board.getCards().get(6));
 		hand1.add(board.getCards().get(16));
-		tempPlayers.get(0).setMyCards(hand1);
+		tempPlayers[0].setMyCards(hand1);
 		
 		//hand1.clear();
 		//for(int i = 0 ; i < board.getCards().size(); i++) {
@@ -406,13 +406,13 @@ public class JHASv2_GameActionTests {
 		hand2.add(board.getCards().get(2));
 		hand2.add(board.getCards().get(7));
 		hand2.add(board.getCards().get(17));
-		tempPlayers.get(1).setMyCards(hand2);
+		tempPlayers[1].setMyCards(hand2);
 		
 		//hand2.clear();
 		hand3.add(board.getCards().get(3));
 		hand3.add(board.getCards().get(8));
 		hand3.add(board.getCards().get(18));
-		tempPlayers.get(2).setMyCards(hand3);
+		tempPlayers[2].setMyCards(hand3);
 		
 		//no players can disprove
 		Card tempCard = new Card();
@@ -421,8 +421,8 @@ public class JHASv2_GameActionTests {
 		assertEquals(tempCard, (null));
 		
 		//only accusing player can disprove
-		tempPlayers.get(0).getCards().add((board.getCards().get(0)));
-		tempCard = board.handleSuggestion(sol, tempPlayers.get(0), tempPlayers);
+		tempPlayers[0].getCards().add((board.getCards().get(0)));
+		tempCard = board.handleSuggestion(sol, tempPlayers[0], tempPlayers);
 		//System.out.println(tempCard.getCardName());
 		assertEquals(tempCard, null);
 		
@@ -435,32 +435,32 @@ public class JHASv2_GameActionTests {
 		assertEquals(tempCard, null);
 		
 		//two players can disprove, correct player (next in list) returns answer
-		tempPlayers.get(0).getCards().remove(board.getCards().get(0));
-		for(int i = 0 ; i < tempPlayers.get(0).getCards().size(); i++) {
-				System.out.println("player 1 " + i + " " + tempPlayers.get(0).getCards().get(i).getCardName());
+		tempPlayers[0].getCards().remove(board.getCards().get(0));
+		for(int i = 0 ; i < tempPlayers[0].getCards().size(); i++) {
+				System.out.println("player 1 " + i + " " + tempPlayers[0].getCards().get(i).getCardName());
 		}
-		tempPlayers.get(1).getCards().add((board.getCards().get(14)));
-		tempPlayers.get(2).getCards().add((board.getCards().get(10)));
+		tempPlayers[1].getCards().add((board.getCards().get(14)));
+		tempPlayers[2].getCards().add((board.getCards().get(10)));
 		
-		for(int i = 0 ; i < tempPlayers.get(1).getCards().size(); i++) {
-			System.out.println("player 2 " + i + " " + tempPlayers.get(1).getCards().get(i).getCardName());
-		}
-		
-		for(int i = 0 ; i < tempPlayers.get(2).getCards().size(); i++) {
-			System.out.println("player 3 " + i + " " + tempPlayers.get(2).getCards().get(i).getCardName());
+		for(int i = 0 ; i < tempPlayers[1].getCards().size(); i++) {
+			System.out.println("player 2 " + i + " " + tempPlayers[1].getCards().get(i).getCardName());
 		}
 		
+		for(int i = 0 ; i < tempPlayers[2].getCards().size(); i++) {
+			System.out.println("player 3 " + i + " " + tempPlayers[2].getCards().get(i).getCardName());
+		}
 		
-		tempCard = board.handleSuggestion(sol, tempPlayers.get(0), tempPlayers);
+		
+		tempCard = board.handleSuggestion(sol, tempPlayers[0], tempPlayers);
 		assertEquals(tempCard.getCardName(), "Game Room");
 		
 		//players are queried in order (human and another player can disprove, ensure
 		//other player who is next in list returns answer
 		Player tempPlayer = new Player();
 		tempPlayer = p1;
-		tempPlayers.set(0, p2);
-		tempPlayers.set(1, tempPlayer);
-		tempPlayers.get(0).getCards().remove(3);
+		tempPlayers[0] =p2;
+		tempPlayers[1] = tempPlayer;
+		tempPlayers[0].getCards().remove(3);
 		tempCard = board.handleSuggestion(sol, p2, tempPlayers);
 		assertEquals(tempCard.getCardName(), "Wrench");
 		

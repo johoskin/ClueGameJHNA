@@ -9,40 +9,18 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
-	private String suggPerson;
-	private String suggRoom;
-	private String suggWeapon;
 	private Set<BoardCell> visitedSpots = new HashSet<BoardCell>();
+	private boolean noReturn = false;
+	private String lastVisited = "Attic";
+	private Character lastChar = 'A';
 
 	//last visited location
 	private BoardCell lastLocation = new BoardCell();
 
-	public Solution mySolution = new Solution();
-	
-	public Solution getMySolution() {
-		return mySolution;
-	}
-
-	public void setMySolution(Solution mySolution) {
-		this.mySolution = mySolution;
-	}
 
 	private Card[] seen = new Card[22];
 	
 	//SUGGESTION FOR CODE
-	
-	public String getSuggPerson() {
-		return suggPerson;
-	}
-
-	public String getSuggRoom() {
-		return suggRoom;
-	}
-
-	public String getSuggWeapon() {
-		return suggWeapon;
-	}
-
 	
 	//SUGGESTION FOR CODE
 	
@@ -89,24 +67,7 @@ public class ComputerPlayer extends Player {
 		setLastVisitedOn(loc);
 		return loc;
 	}
-	
-	public void makeAccusation() {
-		mySolution.person = suggPerson;
-		mySolution.room = suggRoom;
-		mySolution.weapon = suggWeapon;
-	}
-	
-	public void setSuggPerson(String suggPerson) {
-		this.suggPerson = suggPerson;
-	}
 
-	public void setSuggRoom(String suggRoom) {
-		this.suggRoom = suggRoom;
-	}
-
-	public void setSuggWeapon(String suggWeapon) {
-		this.suggWeapon = suggWeapon;
-	}
 
 	public void createSuggestion(ArrayList<Card> seenCards, ArrayList<Card> unSeenCards, Card roomCard) {
 		Random randomGen = new Random();
@@ -116,34 +77,95 @@ public class ComputerPlayer extends Player {
 			do {
 				randomInt = randomGen.nextInt(unSeenCards.size());
 				if(unSeenCards.get(randomInt).getCardType() == CardType.PERSON ) {
-					suggPerson = unSeenCards.get(randomInt).getCardName();
+					setSuggPerson(unSeenCards.get(randomInt).getCardName());
 				}
 			}while (unSeenCards.get(randomInt).getCardType() != CardType.PERSON);
 
 			do {
 				randomInt = randomGen.nextInt(unSeenCards.size());
 				if(unSeenCards.get(randomInt).getCardType() == CardType.WEAPON) {
-					suggWeapon = unSeenCards.get(randomInt).getCardName();
+					setSuggWeapon(unSeenCards.get(randomInt).getCardName());
 				}
 			}while (unSeenCards.get(randomInt).getCardType() != CardType.WEAPON);
 		}else {
 			if(unSeenCards.get(0).getCardType() == CardType.PERSON) {
-				suggPerson = unSeenCards.get(0).getCardName();
+				setSuggPerson(unSeenCards.get(0).getCardName());
 			}
 			if(unSeenCards.get(0).getCardType() == CardType.WEAPON) {
-				suggWeapon = unSeenCards.get(0).getCardName();
+				setSuggWeapon(unSeenCards.get(0).getCardName());
 			}
 		}
 
-		suggRoom = roomCard.getCardName();
+		setSuggRoom(roomCard.getCardName());
 
 	}
 	
 	@Override
 	public void makeMove(Set<BoardCell> targets) {
+		
+		if(noReturn == true) {
+			makeAccusation();
+		}
+		
 		BoardCell cell = pickLocation(targets);
+		
+		if(cell.isRoom() && cell.getInitial() == lastChar) {
+			do {
+				cell = pickLocation(targets);
+			} while (cell.getInitial() == lastChar);
+		}
 		setRow(cell.getRow());
 		setColumn(cell.getColumn());
+		
+		if(cell.isRoom()) {
+			lastChar = cell.getInitial();
+			switch(cell.getInitial()) {
+			case('B'):
+				lastVisited = "BATHROOM";
+				break;
+			case('T'):
+				lastVisited = "THEATHER";
+				break;
+			case('G'):
+				lastVisited = "GAME ROOM";
+				break;
+			case('K'):
+				lastVisited = "KITCHEN";
+				break;
+			case('A'):
+				lastVisited = "ANNEX";
+				break;
+			case('C'):
+				lastVisited = "ATTIC";
+				break;
+			case('Y'):
+				lastVisited = "BALCONY";
+				break;
+			case('L'):
+				lastVisited = "LIVING ROOM";
+				break;
+			case('O'):
+				lastVisited = "OFFICE";
+				break;
+			default: 
+				break;
+			}
+			Card card = new Card(cell.getRoomName(), CardType.ROOM);
+			createSuggestion(seenCards, unSeenCards, card);
+		}
+	}
+
+	public boolean isNoReturn() {
+		return noReturn;
+	}
+
+	public void setNoReturn(boolean noReturn) {
+		this.noReturn = noReturn;
+	}
+	
+	@Override
+	public void compReturn() {
+		noReturn = true;
 	}
 
 }

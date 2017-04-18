@@ -14,6 +14,53 @@ public class Player {
 	private boolean isTurn = false;
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	
+	private String suggPerson;
+	private String suggRoom;
+	private String suggWeapon;
+	
+	
+	public String getSuggPerson() {
+		return suggPerson;
+	}
+
+	public void setSuggPerson(String suggPerson) {
+		this.suggPerson = suggPerson;
+	}
+
+	public String getSuggRoom() {
+		return suggRoom;
+	}
+
+	public void setSuggRoom(String suggRoom) {
+		this.suggRoom = suggRoom;
+	}
+
+	public String getSuggWeapon() {
+		return suggWeapon;
+	}
+
+	public void setSuggWeapon(String suggWeapon) {
+		this.suggWeapon = suggWeapon;
+	}
+
+	public Solution mySolution = new Solution();
+	
+	public Solution getMySolution() {
+		return mySolution;
+	}
+
+	public void setMySolution(Solution mySolution) {
+		this.mySolution = mySolution;
+	}
+	
+	
+	public void makeAccusation() {
+		mySolution.person = suggPerson;
+		mySolution.room = suggRoom;
+		mySolution.weapon = suggWeapon;
+	}
+	
+	
 	public boolean isTurn() {
 		return isTurn;
 	}
@@ -158,6 +205,10 @@ public class Player {
 	}
 
 	public void makeMove(Set<BoardCell> targets) {
+		
+	}
+	
+	public void compReturn() {
 		
 	}
 }

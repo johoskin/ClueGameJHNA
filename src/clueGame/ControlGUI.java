@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 
 public class ControlGUI extends JPanel{
 	private JTextField turn, roll, guess, response;
-	private Board controlBoard;
+	private Board board;
 	private int numRoll;
 	
 	public void setTurn(String s) {
@@ -37,8 +37,8 @@ public class ControlGUI extends JPanel{
 		response.setText(s);
 	}
 
-	public ControlGUI(Board board) {
-		controlBoard = board;
+	public ControlGUI() {
+		board = board.getInstance();
 		setLayout(new GridLayout(2,1));
 		JPanel panel = createTurnPanel();
 		add(panel);
@@ -72,6 +72,7 @@ public class ControlGUI extends JPanel{
 		JButton nextPlayer = new JButton("Next player");
 		nextPlayer.addActionListener(new TurnListener());
 		JButton accusationButton = new JButton("Make an accusation");
+		accusationButton.addActionListener(new AccListener());
 		
 		buttPanel.add(nextPlayer);
 		buttPanel.add(accusationButton);
@@ -86,7 +87,7 @@ public class ControlGUI extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,1));
 		JLabel nameLabel = new JLabel("Roll");
-		roll = new JTextField(5);
+		roll = new JTextField(3);
 		roll.setEditable(false);
 		panel.add(nameLabel);
 		panel.add(roll);
@@ -98,7 +99,7 @@ public class ControlGUI extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,2));
 		JLabel nameLabel = new JLabel("Guess");
-		guess = new JTextField(20);
+		guess = new JTextField(30);
 		guess.setEditable(false);
 		panel.add(nameLabel);
 		panel.add(guess);
@@ -124,34 +125,67 @@ public class ControlGUI extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println(controlBoard.getPlayerIndex());
-			System.out.println(controlBoard.getTurnOver());
+			//System.out.println(board.getPlayerIndex());
+			//System.out.println(board.getTurnOver());
 			
 			
 			
-			if(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].isHuman()) {
-				if(controlBoard.isTurnOver() == false) {
+			if(board.getPlayers()[board.getPlayerIndex()].isHuman()) {
+				if(board.isTurnOver() == false) {
 					JOptionPane.showMessageDialog(null, "You need to finish your turn");
 					return;
 				}
 				else {
-					setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
-					numRoll = controlBoard.rollDie();
+					setTurn(board.getPlayers()[board.getPlayerIndex()].getPlayerName());
+					numRoll = board.rollDie();
 					setRoll(String.valueOf(numRoll));
-					controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-					System.out.println(controlBoard.isTurnOver());
+					board.handleTurn(board.getPlayers()[board.getPlayerIndex()], numRoll);
+					if(board.getSuggCard() != null) {
+						setResponse(board.getSuggCard().getCardName());
+					}
+					if(!(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() == null && board.getPlayers()[board.getPlayerIndex()].getSuggRoom() == null && board.getPlayers()[board.getPlayerIndex()].getSuggWeapon() == null)) {
+						setGuess(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() + " in the " + board.getPlayers()[board.getPlayerIndex()].getSuggRoom() + " with the " + board.getPlayers()[board.getPlayerIndex()].getSuggWeapon());
+					}
+					//System.out.println(board.isTurnOver());
 				}
 			}
 			else {
-				setTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()].getPlayerName());
-				numRoll = controlBoard.rollDie();
+				setTurn(board.getPlayers()[board.getPlayerIndex()].getPlayerName());
+				numRoll = board.rollDie();
 				setRoll(String.valueOf(numRoll));
-				controlBoard.handleTurn(controlBoard.getPlayers()[controlBoard.getPlayerIndex()], numRoll);
-				controlBoard.nextPlayer();
-				
+				board.handleTurn(board.getPlayers()[board.getPlayerIndex()], numRoll);
+				board.nextPlayer();
 			}
-
 		}
+	}
+	
+	class AccListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(board.getPlayers()[board.getPlayerIndex()].isHuman()) {
+				if(board.isTurnOver() == true) {
+					JOptionPane.showMessageDialog(null, "You can only make an accusation at the start of your turn...");
+					return;
+				}
+				else {
+					GuessGUI guess = new GuessGUI(false, board.getPlayers()[0]);
+					guess.setVisible(true);
+					setGuess(board.getPlayers()[0].getSuggPerson() + " in the " + board.getPlayers()[0].getSuggRoom() + " with the " + board.getPlayers()[0].getSuggWeapon());
+					if(!board.getSuggCard().equals(null)) {
+						setResponse(board.getSuggCard().getCardName());
+					}
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "You can only make an accusation at the start of your turn...");
+				return;
+			}
+			
+		}
+		
+		
+
 		
 	}
 	
@@ -167,7 +201,7 @@ public class ControlGUI extends JPanel{
 		frame.setTitle("Clue GUI Control");
 		frame.setSize(700, 180);	
 		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI(controlBoard);
+		ControlGUI gui = new ControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		frame.setVisible(true);
