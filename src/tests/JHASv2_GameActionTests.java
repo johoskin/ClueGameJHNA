@@ -376,7 +376,7 @@ public class JHASv2_GameActionTests {
 		HumanPlayer p1 = new HumanPlayer();
 		ComputerPlayer p2 = new ComputerPlayer();
 		ComputerPlayer p3 = new ComputerPlayer();
-		Player[] tempPlayers = new Player[6];
+		Player[] tempPlayers = new Player[3];
 		
 		tempPlayers[0] =p1;
 		tempPlayers[1] = p2;
@@ -415,13 +415,13 @@ public class JHASv2_GameActionTests {
 		tempPlayers[2].setMyCards(hand3);
 		
 		//no players can disprove
-		Card tempCard = new Card();
+		Card tempCard = board.handleSuggestion(sol, tempPlayers[0], tempPlayers);
 		for (int i = 0; i < p1.getCards().size(); i++){
 			System.out.println(p1.getCards().get(i).getCardName());
 		}
 
 		
-		tempCard = board.handleSuggestion(sol, p1, tempPlayers);
+		//tempCard = board.handleSuggestion(sol, p1, tempPlayers);
 		//System.out.println(tempCard.getCardName());
 		assertEquals(tempCard, null);
 		

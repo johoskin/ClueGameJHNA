@@ -13,6 +13,9 @@ public class ComputerPlayer extends Player {
 	private boolean noReturn = false;
 	private String lastVisited = "Attic";
 	private Character lastChar = 'A';
+	private Card card = new Card();
+	private BoardCell cell;
+
 
 	//last visited location
 	private BoardCell lastLocation = new BoardCell();
@@ -97,7 +100,7 @@ public class ComputerPlayer extends Player {
 		}
 
 		setSuggRoom(roomCard.getCardName());
-
+		setMySolution(getSuggRoom(), getSuggPerson(), getSuggWeapon());
 	}
 	
 	@Override
@@ -105,9 +108,11 @@ public class ComputerPlayer extends Player {
 		
 		if(noReturn == true) {
 			makeAccusation();
+			compAcc = true;
+			return;
 		}
 		
-		BoardCell cell = pickLocation(targets);
+		cell = pickLocation(targets);
 		
 		if(cell.isRoom() && cell.getInitial() == lastChar) {
 			do {
@@ -117,41 +122,62 @@ public class ComputerPlayer extends Player {
 		setRow(cell.getRow());
 		setColumn(cell.getColumn());
 		
+		
+		
 		if(cell.isRoom()) {
 			lastChar = cell.getInitial();
 			switch(cell.getInitial()) {
 			case('B'):
+				cell.setRoomName("Bathroom");
 				lastVisited = "BATHROOM";
 				break;
 			case('T'):
+				cell.setRoomName("Theater");
 				lastVisited = "THEATHER";
 				break;
 			case('G'):
+				cell.setRoomName("Game Room");
 				lastVisited = "GAME ROOM";
 				break;
 			case('K'):
+				cell.setRoomName("Kitchen");
 				lastVisited = "KITCHEN";
 				break;
 			case('A'):
+				cell.setRoomName("Annex");
 				lastVisited = "ANNEX";
 				break;
 			case('C'):
+				cell.setRoomName("Attic");
 				lastVisited = "ATTIC";
 				break;
 			case('Y'):
+				cell.setRoomName("Balcony");
 				lastVisited = "BALCONY";
 				break;
 			case('L'):
+				cell.setRoomName("Living Room");
 				lastVisited = "LIVING ROOM";
 				break;
 			case('O'):
+				cell.setRoomName("Office");
 				lastVisited = "OFFICE";
 				break;
 			default: 
 				break;
 			}
-			Card card = new Card(cell.getRoomName(), CardType.ROOM);
+			//System.out.println(cell.getRoomName() + "heyy now");
+			
+			card.setCardName(cell.getRoomName());
+			card.setCardType(CardType.ROOM);
 			createSuggestion(seenCards, unSeenCards, card);
+			//System.out.println(unSeenCards.size() + " unseen " + seenCards.size() + " seen " + card.getCardName() + " card name ");
+			inRoom = true;
+			System.out.println(suggPerson + " sugPerson " + suggWeapon + " sugWeapon " + suggRoom);
+		}
+		else {
+			control.setGuess(" ");
+			control.setResponse(" ");
 		}
 	}
 

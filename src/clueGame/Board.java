@@ -37,7 +37,8 @@ public class Board extends JPanel {
 	private BoardCell targetCell;
 	private int playerIndex = 0;
 	private boolean isTurnOver = true;
-	private Card suggCard;
+	private Card suggCard = new Card();
+	private ControlGUI control;
 
 
 	public void setSuggCard(Card suggCard) {
@@ -82,7 +83,6 @@ public class Board extends JPanel {
 	public void handleTurn(Player p, int roll) {
 		
 		calcTargets(p.getRow(), p.getColumn(), roll);
-		
 		if(p.isHuman()) {
 			isTurnOver = false;
 			for(BoardCell c: targets) {
@@ -92,11 +92,35 @@ public class Board extends JPanel {
 		}
 		else if (!p.isHuman() && isTurnOver == true){
 			p.makeMove(targets);
-			suggCard = handleSuggestion(p.getMySolution(), players[playerIndex], players);
+			if (p.isCompAcc()) {
+				if(checkAccusation(p.getMySolution())) {
+					JOptionPane.showMessageDialog(null, p.getPlayerName() + "has won the game! The correct guess was " + p.getPlayerName() + "has accused " + p.getSuggPerson() + " in the " + p.getSuggRoom() + " with the " + p.getSuggWeapon() + ".");
+					return;
+				} else {
+					JOptionPane.showMessageDialog(null, p.getPlayerName() + "has accused " + p.getSuggPerson() + " in the " + p.getSuggRoom() + " with the " + p.getSuggWeapon() + ", but this is incorrect!");
+					return;
+				}
+				
+			}
+			control.setGuess(p.getSuggPerson() + " in the " + p.getSuggRoom() + " with the " + p.getSuggWeapon());
+			if(p.isInRoom()) {
+			suggCard = handleSuggestion(p.getMySolution(), p, players);
+			System.out.println(suggCard.getCardName());
+			}
+			//System.out.println(suggCard.getCardName());
+			if(suggCard != null) {
+			control.setResponse(suggCard.getCardName());
+			}
+			else {
+				control.setResponse(" ");
+			}
 			p.seenCards.add(suggCard);
+			p.unSeenCards.remove(suggCard);
 			if(suggCard == null) {
 				p.compReturn();
 			}
+			repaint();
+			
 		}
 	}
 	
@@ -230,6 +254,7 @@ public class Board extends JPanel {
 	}
 
 	public void initialize() {
+		control = ControlGUI.getInstance();
 		addMouseListener(new ChooseListener());
 		FileReader roomin, boardin, playerin, cardin;
 		Scanner Roomin1 = null, Boardin1 = null, Playerin1 = null, Cardin1 = null;
@@ -396,7 +421,7 @@ public class Board extends JPanel {
 			}
 		}while (cards.get(randomInt).getCardType() != CardType.WEAPON);
 		
-		
+		System.out.println("SOLUTION: " + solution.person + " " + solution.weapon + " " + solution.room);
 		
 		
 		do {
@@ -431,45 +456,72 @@ public class Board extends JPanel {
 	
 	//Handle Suggestion iterates through the each player's cards, in order, and returns a card 
 	//within the suggestion
-	public Card handleSuggestion(Solution sol, Player accuser, Player[] plrs) {
+	/*public Card handleSuggestion(Solution sol, Player accuser, Player[] plrs) {
 		
+		Card suggCard = new Card();
 		
 		for(Player s : plrs) {
+			
+			
 			for(int j = 0; j < s.getCards().size(); j++){
 
 				if(s.getCards().get(j).getCardType() == CardType.PERSON){
 					if(s.getCards().get(j).getCardName().equals(sol.person)){
 						if(s.equals(accuser)){
-							return null;
+							suggCard = null;
 						}
-						return s.getCards().get(j);
+						suggCard = s.getCards().get(j);
+						return suggCard;
 					}
 				}
 
 				if(s.getCards().get(j).getCardType() == CardType.WEAPON){
 					if(s.getCards().get(j).getCardName().equals(sol.weapon)){
 						if(s.equals(accuser)){
-							return null;
+							suggCard = null;
 						}
-						return s.getCards().get(j);
+						suggCard = s.getCards().get(j);
+						return suggCard;
 					}
 				}
 
 				if(s.getCards().get(j).getCardType() == CardType.ROOM){
 					if(s.getCards().get(j).getCardName().equals(sol.room)){
 						if(s.equals(accuser)){
-							return null;
+							suggCard = null;
 						}
-						return s.getCards().get(j);
+						suggCard = s.getCards().get(j);
+						return suggCard;
 					}
 				}
 			}
 		}
-		return null;
+		return suggCard;
+	}*/
+	
+	public Card handleSuggestion(Solution sol, Player accuser, Player[] plrs) {
+		Card tempCard = new Card();
+		
+		for(Player s : plrs) {
+			//System.out.println(s.getCards().get(0) + " " + s.getCards().get(1));
+			tempCard = s.disproveSuggestion(sol);
+			//System.out.println(tempCard.getCardName());
+			if(tempCard != null) {
+				if(s.equals(accuser)) {
+					tempCard = null;
+					//return tempCard;
+				}
+				else {
+					return tempCard;
+				}
+			}
+		}
+
+		return tempCard;
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
-		if(solution.person == accusation.person && solution.room == accusation.room && solution.weapon == accusation.weapon) {
+		if(solution.person.equals(accusation.person) && solution.room.equals(accusation.room) && solution.weapon.equals(accusation.weapon)) {
 			return true;
 		}
 		return false;
@@ -536,14 +588,24 @@ public class Board extends JPanel {
 							repaint();
 							
 							if(getCurrentLocation(players[0].getRow(), players[0].getColumn()).isRoom()) {
-								GuessGUI guess = new GuessGUI(true, players[0]);
+								players[0].setInRoom(true);
+								GuessGUI guess = new GuessGUI(players[0]);
 								guess.setVisible(true);
+								if(suggCard == null) {
+									System.out.println("null");
+								}
+								else {
+								System.out.println(suggCard.getCardName());
+								}
 /*								if (checkAccusation(players[0].getMySolution())) {
 									JOptionPane.showMessageDialog(null, "Congrats, you have won the game!");
 									System.exit(0);
 									return;
 								}
 								setSuggCard(handleSuggestion(players[0].getMySolution(), players[0], players));*/
+							}
+							else {
+								players[0].setInRoom(false);
 							}
 							
 							isTurnOver = true;

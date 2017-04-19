@@ -20,6 +20,7 @@ public class ControlGUI extends JPanel{
 	private JTextField turn, roll, guess, response;
 	private Board board;
 	private int numRoll;
+	private boolean accRoom = false;
 	
 	// variable used for singleton pattern
 	private static ControlGUI theInstance = new ControlGUI();
@@ -134,6 +135,7 @@ public class ControlGUI extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			
 			//System.out.println(board.getPlayerIndex());
 			//System.out.println(board.getTurnOver());
 			
@@ -145,12 +147,16 @@ public class ControlGUI extends JPanel{
 					return;
 				}
 				else {
+					setGuess(" ");
 					setTurn(board.getPlayers()[board.getPlayerIndex()].getPlayerName());
 					numRoll = board.rollDie();
 					setRoll(String.valueOf(numRoll));
 					board.handleTurn(board.getPlayers()[board.getPlayerIndex()], numRoll);
+					//System.out.println(board.getSuggCard().getCardName());
 					if(board.getSuggCard() != null) {
 						setResponse(board.getSuggCard().getCardName());
+					} else {
+						setResponse("");
 					}
 					if(!(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() == null && board.getPlayers()[board.getPlayerIndex()].getSuggRoom() == null && board.getPlayers()[board.getPlayerIndex()].getSuggWeapon() == null)) {
 						setGuess(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() + " in the " + board.getPlayers()[board.getPlayerIndex()].getSuggRoom() + " with the " + board.getPlayers()[board.getPlayerIndex()].getSuggWeapon());
@@ -159,10 +165,26 @@ public class ControlGUI extends JPanel{
 				}
 			}
 			else {
+				setResponse(null);
 				setTurn(board.getPlayers()[board.getPlayerIndex()].getPlayerName());
 				numRoll = board.rollDie();
 				setRoll(String.valueOf(numRoll));
+				/*if(!board.getPlayers()[board.getPlayerIndex()].isInRoom()) {
+					board.getPlayers()[board.getPlayerIndex()].clearSolution();
+				}*/
 				board.handleTurn(board.getPlayers()[board.getPlayerIndex()], numRoll);
+				//board.nextPlayer();
+				if(board.getSuggCard() != null) {
+					setResponse(board.getSuggCard().getCardName());
+				} else {
+					setResponse("");
+				}
+				if(!(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() == null && board.getPlayers()[board.getPlayerIndex()].getSuggRoom() == null && board.getPlayers()[board.getPlayerIndex()].getSuggWeapon() == null)) {
+					setGuess(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() + " in the " + board.getPlayers()[board.getPlayerIndex()].getSuggRoom() + " with the " + board.getPlayers()[board.getPlayerIndex()].getSuggWeapon());
+				}
+				else {
+					setGuess("");
+				}
 				board.nextPlayer();
 			}
 		}
@@ -178,13 +200,20 @@ public class ControlGUI extends JPanel{
 					return;
 				}
 				else {
-					GuessGUI guess = new GuessGUI(false, board.getPlayers()[0]);
+					if(board.getPlayers()[board.getPlayerIndex()].isInRoom()) {
+						accRoom = true;
+					}
+					else {
+						accRoom = false;
+					}
+					GuessGUI guess = new GuessGUI(board.getPlayers()[0]);
 					guess.setVisible(true);
 					setGuess(board.getPlayers()[0].getSuggPerson() + " in the " + board.getPlayers()[0].getSuggRoom() + " with the " + board.getPlayers()[0].getSuggWeapon());
-					if(board.getSuggCard() !=null) {
-						setResponse(board.getSuggCard().getCardName());
+
 					}
-				}
+					
+					
+				
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "You can only make an accusation at the start of your turn...");
@@ -198,6 +227,12 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
+	public boolean isAccRoom() {
+		return accRoom;
+	}
+	public void setAccRoom(boolean accRoom) {
+		this.accRoom = accRoom;
+	}
 	public static void main(String[] args){
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();

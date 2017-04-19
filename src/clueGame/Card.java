@@ -3,6 +3,15 @@ package clueGame;
 public class Card {
 	private String cardName;
 	private CardType cardType;
+	
+	
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
+	}
 	private boolean dealt = false;
 	
 	

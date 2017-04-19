@@ -12,11 +12,33 @@ public class Player {
 	private Color color;
 	private boolean isHuman = false;
 	private boolean isTurn = false;
+	protected boolean inRoom =false;
+	protected boolean compAcc = false;
+	protected ControlGUI control;
+
+	protected ArrayList<Card> matching = new ArrayList<Card>();
+	
+	public boolean isCompAcc() {
+		return compAcc;
+	}
+
+	public void setCompAcc(boolean compAcc) {
+		this.compAcc = compAcc;
+	}
+	
+	public boolean isInRoom() {
+		return inRoom;
+	}
+
+	public void setInRoom(boolean inRoom) {
+		this.inRoom = inRoom;
+	}
+
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	
-	private String suggPerson;
-	private String suggRoom;
-	private String suggWeapon;
+	protected String suggPerson;
+	protected String suggRoom;
+	protected String suggWeapon;
 	
 	
 	public String getSuggPerson() {
@@ -49,8 +71,14 @@ public class Player {
 		return mySolution;
 	}
 
-	public void setMySolution(Solution mySolution) {
-		this.mySolution = mySolution;
+	public void setMySolution(String room, String person, String weapon) {
+		this.mySolution.room = room;
+		this.mySolution.person = person;
+		this.mySolution.weapon = weapon;
+	}
+	
+	public void clearSolution() {
+		this.mySolution = null;
 	}
 	
 	
@@ -104,6 +132,7 @@ public class Player {
 		this.column = column;
 		this.color = color;
 		this.isHuman = isHuman;
+		control = ControlGUI.getInstance();
 	}
 	
 	public boolean isHuman() {
@@ -115,8 +144,35 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
-		ArrayList<Card> matching = new ArrayList<Card>();
-		for(int i = 0; i < myCards.size(); i++){
+		matching.clear();
+		
+		//Card person = new Card(suggestion.person, CardType.PERSON);
+		//Card room = new Card(suggestion.room, CardType.ROOM);
+		//Card weapon = new Card(suggestion.weapon, CardType.WEAPON);
+		//System.out.println(myCards.size());
+		System.out.println("disprove suggestion " + suggestion.person + " " + suggestion.weapon + " " + suggestion.room);
+		for(Card c: myCards) {
+			
+			if(c.getCardName().equals(suggestion.person)) {
+				System.out.println(c.getCardName());
+				matching.add(c);
+			}
+			if(c.getCardName().equals(suggestion.weapon)) {
+				System.out.println(c.getCardName());
+				matching.add(c);
+			}
+			if(c.getCardName().equals(suggestion.room)) {
+				System.out.println(c.getCardName());
+				matching.add(c);
+			}
+			
+		}
+		
+		//if(myCards.contains(person) matching.add(person);
+		//if(myCards.contains(weapon.getCardName())) matching.add(weapon);
+		//if(myCards.contains(room.getCardName())) matching.add(room);
+		
+		/*for(int i = 0; i < myCards.size(); i++){
 			
 			if(getCards().get(i).getCardType() == CardType.PERSON){
 				if(myCards.get(i).getCardName().equals(suggestion.person)){
@@ -136,8 +192,8 @@ public class Player {
 				}
 			}
 			
-		}
-		
+		}*/
+		System.out.println(matching.size() + " matching size");
 		if(matching.size() == 0){
 			return null;
 		}

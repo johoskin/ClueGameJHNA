@@ -32,7 +32,7 @@ public class GuessGUI extends JDialog {
 	private JTextField yourRoom;
 	private JButton submit, cancel;
 	private Board board;
-	private boolean inRoom = false;
+	//private boolean inRoom = false;
 	private boolean submitted = false;
 	private ControlGUI control;
 	
@@ -41,7 +41,7 @@ public class GuessGUI extends JDialog {
 	}
 
 
-	public GuessGUI(boolean inRoom, Player p) {
+	public GuessGUI(Player p) {
 		setTitle("Make a Guess");
 		//setSize(700, 180);
 		board = Board.getInstance();
@@ -51,8 +51,7 @@ public class GuessGUI extends JDialog {
 		setSize(300,300);
 		setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		setLayout(new GridLayout(4,1));
-		if(inRoom) {
-			this.inRoom = true;
+		if(p.isInRoom()) {
 			JPanel urRoom = createYourRoom(p);
 			add(urRoom);
 		}
@@ -189,25 +188,53 @@ public class GuessGUI extends JDialog {
 			}
 			//System.out.println(submitted);
 			if(submitted) {
-				if(inRoom) {
+				if(board.getPlayers()[0].isInRoom()) {
 					board.getPlayers()[0].setSuggRoom(yourRoom.getText());
 					board.getPlayers()[0].setSuggPerson((String)personCombo.getSelectedItem());
 					board.getPlayers()[0].setSuggWeapon((String)weaponCombo.getSelectedItem());
+					board.getPlayers()[0].setMySolution(board.getPlayers()[0].getSuggRoom(), board.getPlayers()[0].getSuggPerson(), board.getPlayers()[0].getSuggWeapon());
+					if(control.isAccRoom()) {
+						
+						board.getPlayers()[0].makeAccusation();
+						if (board.checkAccusation(board.getPlayers()[0].getMySolution())) {
+							JOptionPane.showMessageDialog(null, "Congrats, you have won the game!");
+							System.exit(0);
+							return;
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "No, sorry!");
+							control.setResponse(" ");
+							for(BoardCell b: board.getTargets()) {
+								b.setTarget(false);
+							}
+							board.getTargets().clear();
+							board.setTurnOver(true);
+							board.nextPlayer();
+							board.repaint();
+							dispose();
+							return;
+							
+						}
+					}
 					board.setSuggCard(board.handleSuggestion(board.getPlayers()[0].getMySolution(), board.getPlayers()[0], board.getPlayers()));
 					if(board.getSuggCard() != null) {
 						control.setResponse(board.getSuggCard().getCardName());
+					}
+					else {
+						control.setResponse("");
 					}
 					if(!(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() == null && board.getPlayers()[board.getPlayerIndex()].getSuggRoom() == null && board.getPlayers()[board.getPlayerIndex()].getSuggWeapon() == null)) {
 						control.setGuess(board.getPlayers()[board.getPlayerIndex()].getSuggPerson() + " in the " + board.getPlayers()[board.getPlayerIndex()].getSuggRoom() + " with the " + board.getPlayers()[board.getPlayerIndex()].getSuggWeapon());
 					}
 					board.getTargets().clear();
-					board.repaint();
 					board.nextPlayer();
+					board.repaint();
 					dispose();
 				} else {
 					board.getPlayers()[0].setSuggRoom((String)roomCombo.getSelectedItem());
 					board.getPlayers()[0].setSuggPerson((String)personCombo.getSelectedItem());
 					board.getPlayers()[0].setSuggWeapon((String)weaponCombo.getSelectedItem());
+					board.getPlayers()[0].setMySolution(board.getPlayers()[0].getSuggRoom(), board.getPlayers()[0].getSuggPerson(), board.getPlayers()[0].getSuggWeapon());
 					//System.out.println((String)roomCombo.getSelectedItem());
 					board.getPlayers()[0].makeAccusation();
 					if (board.checkAccusation(board.getPlayers()[0].getMySolution())) {
@@ -217,10 +244,16 @@ public class GuessGUI extends JDialog {
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "No, sorry!");
+						control.setResponse(" ");
+						for(BoardCell b: board.getTargets()) {
+							b.setTarget(false);
+						}
 						board.getTargets().clear();
-						board.repaint();
+						board.setTurnOver(true);
 						board.nextPlayer();
+						board.repaint();
 						dispose();
+						return;
 						
 						
 					}
@@ -228,6 +261,7 @@ public class GuessGUI extends JDialog {
 				
 
 			} else {
+				board.nextPlayer();
 				dispose();
 			}
 			
@@ -244,10 +278,11 @@ public class GuessGUI extends JDialog {
 		controlBoard.initialize();
 		//dialog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Player p = new Player();
+		p.setInRoom(true);
 		p.setRow(20);
 		p.setColumn(15);
 		// Create the JPanel and add it to the JFrame
-		GuessGUI gui = new GuessGUI(true, p);
+		GuessGUI gui = new GuessGUI(p);
 		//dialog.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		gui.setVisible(true);
